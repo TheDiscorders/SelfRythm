@@ -4,8 +4,10 @@ const fs = require('fs');
 const Enmap = require('enmap');
 const config = require(`./config`)
 
-client.commands = new Enmap();
+global.queue = new Map();
 
+
+client.commands = new Enmap();
 
 fs.readdir('./events/', (err, files) => {
   if (err) return console.error;
