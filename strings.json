@@ -1,0 +1,4 @@
+{
+    "permissionDenied": "❌ You don't have the permission to run this command",
+    "notInVocal" : "❌ You have to be in a voice channel to make the bot join"
+}
