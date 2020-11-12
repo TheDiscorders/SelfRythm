@@ -24,7 +24,7 @@ First you need to download the repository and put all the files in a folder. The
 Start the bot by doing **`node .`** in a terminal in the folder.
 
 * Commands :
-  * **`$play {url]`**
+  * **`$play {url}`**
 ▶️ _the selfbot joins the channel you're in and starts playing the sound from the link, if there is already a music playing it adds it to a queue._
   * **`$skip`**
 ▶️ _skips the current music playing._
