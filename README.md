@@ -1,4 +1,4 @@
-# Automsg : Discord-Bot
+# Self Rythm Bot
 
 ## What is this shit ?
 
