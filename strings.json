@@ -1,4 +1,10 @@
 {
     "permissionDenied": "❌ You don't have the permission to run this command",
-    "notInVocal" : "❌ You have to be in a voice channel to make the bot join"
+    "notInVocal" : "❌ You have to be in a voice channel to do this",
+    "noLink" : "❌ You need to provide a link",
+    "nothingPlaying": "❌ There is nothing playing",
+    "startedPlaying": "✅ '**SONG_TITLE**' started playing",
+    "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue",
+    "musicStopped": "✅ Music stopped",
+    "musicSkipped": "✅ Music skipped"
 }
