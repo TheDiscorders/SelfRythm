@@ -20,6 +20,7 @@ module.exports.run = async (client, message, args) => {
         var seconds = serverQueue.songs[i].duration % 60;
         if(seconds.length === 1) seconds = "0" + seconds
 
+        if(serverQueue.loop === "on" && i===0) { queuetxt = "🔄" + queuetxt}
         queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) ${serverQueue.songs[i].title}\`\`\n`;
     };
 
