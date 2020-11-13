@@ -1,6 +1,6 @@
 # Self Rythm Bot
 
-# USING SELFBOTS ARE AGAINST DISCORD TOF, THE USAGE OF A SELFBOT MAY RESULT IN A BAN OF YOUR ACCOUNT, WE ARE NOT RESPONSIBLE FOR ANY USAGE OF THE BOT
+# USING SELFBOTS ARE AGAINST DISCORD TOS, THE USAGE OF A SELFBOT MAY RESULT IN A BAN OF YOUR ACCOUNT, WE ARE NOT RESPONSIBLE FOR ANY USAGE OF THE BOT
 ## What is this shit ?
 
 This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. His purpose is to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot. This has many advantages, for example you can use it on any servs you're in, even without permissions.
