@@ -1,5 +1,11 @@
 const strings = require("../strings.json");
 
+/** 
+ * @description Skip the current song
+ * @param {Discord.Client} client the client thats runs the commands
+ * @param {Discord.Message} message the command's message
+ * @param {Array<String>}args useless here  
+ */
 module.exports.run = async (client, message, args) => {
 
     let voiceChannel = message.member.voice.channel; 

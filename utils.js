@@ -1,6 +1,11 @@
 const table = require("ascii-table");
 const AsciiTable = require("ascii-table/ascii-table");
 module.exports = {
+
+    /**
+     * @description Sends logs to console and adds the date/time
+     * @param content The content to log
+     */
     log: function(content) {
         date_ob = new Date();
       
@@ -22,6 +27,10 @@ module.exports = {
       
         console.log(`[ ${dmy} | ${hms} ] ${content}`)
     },
+    /**
+     * @description Checks if the provided string is an url 
+     * @param {String} url 
+     */
     isURL: function (url) {
         if(!url) return false;
         var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
@@ -33,6 +42,10 @@ module.exports = {
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return pattern.test(url);
     },
+    /**
+     * @description Create an ascii-table shown in the console on startup with the loaded events & commands
+     * @param {Object} loaded 
+     */
     showTable: function(loaded){
         var table = new AsciiTable('Loaded content')
         table.setHeading("Events","Commands")
