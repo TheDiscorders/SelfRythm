@@ -1,16 +1,16 @@
 {
     "permissionDenied": "❌ You don't have the permission to run this command",
     "notInVocal" : "❌ You have to be in a voice channel to do this",
-    "noLink" : "❌ You need to provide a link",
+    "noArgs" : "❌ You need to provide a link or some keywords",
     "nothingPlaying": "❌ There is nothing playing",
     "noSongsQueued": "❌ No songs queued",
     "cantLoop": "❌ You need to have a song playing to loop it",
     "badUrl": "❌ Invalid link provided",
-    "startedPlaying": "✅ '**SONG_TITLE**' started playing",
-    "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue",
+    "startedPlaying": "✅ '**SONG_TITLE**' started playing\n<url>",
+    "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue\n<url>",
     "musicStopped": "✅ Music stopped",
     "musicSkipped": "✅ Music skipped",
-    "loopOn": "✅ Looping **SONG_TITLE**",
-    "loopOff": "✅ Stopped looping **SONG_TITLE**",
+    "loopOn": "✅ Looping **SONG_TITLE**\n<url>",
+    "loopOff": "✅ Stopped looping **SONG_TITLE**\n<url>",
     "musicsQueued": ":musical_note: **Musics queued** :musical_note: :"
 }

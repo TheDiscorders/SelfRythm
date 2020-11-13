@@ -1,5 +1,8 @@
 const table = require("ascii-table");
 const AsciiTable = require("ascii-table/ascii-table");
+var search = require('youtube-search');
+const config = require("./config.js");
+
 module.exports = {
 
     /**
@@ -53,5 +56,25 @@ module.exports = {
             table.addRow(loaded.events[i], loaded.commands[i])
         }
         return table.render()
+    },
+    getUrl: async function (words){
+        stringOfWords = words.join(" ");
+ 
+        var opts = {
+            maxResults: 1,
+            key: config.ytbApiKey
+        };
+
+        lookingOnYtb = new Promise(async (resolve, reject) => {
+            await search(stringOfWords, opts, function(err, results) {
+                if(err) return console.log(err);
+                return resolve(results[0].link)
+            });
+        });
+
+        let link = await lookingOnYtb;
+        return link;
+
     }
+    
 }

@@ -37,16 +37,24 @@ function play(guild, song) {
  */
 module.exports.run = async (client, message, args) => {
 
-    if(!args[0] || !utils.isURL(args[0])) return message.channel.send(strings.noLink);
+    if(!args[0]) return message.channel.send(strings.noArgs);
+
+
+    if(utils.isURL(args[0])){
+        FUrl = args[0];
+    } else {
+        FUrl = await utils.getUrl(args)
+    }
 
     let voiceChannel = message.member.voice.channel; 
 
     const serverQueue = queue.get(message.guild.id);
 
-    const songInfo = await ytdl.getInfo(args[0], {filter: "audioonly"});
+    const songInfo = await ytdl.getInfo(FUrl, {filter: "audioonly"});
     const song = {
         title: songInfo.videoDetails.title,
-        url: args[0]
+        duration: songInfo.videoDetails.lengthSeconds,
+        url: FUrl
     }
 
     if(!serverQueue) {
@@ -65,7 +73,7 @@ module.exports.run = async (client, message, args) => {
         if (voiceChannel != null) { 
             var connection = await voiceChannel.join();
             queueConstruct.connection = connection;
-            message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title));
+            message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title).replace("url", song.url));
             play(message.guild, queueConstruct.songs[0]);
         } else {
             queue.delete(message.guild.id);
@@ -73,7 +81,7 @@ module.exports.run = async (client, message, args) => {
         }
     } else {
         serverQueue.songs.push(song);
-        return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title));
+        return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title).replace("url", song.url));
     }
 
     
