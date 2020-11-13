@@ -32,6 +32,10 @@ Start the bot by doing **`node .`** in a terminal in the folder.
 ▶️ _skips the current music playing._
   * **`$stop`**
 ▶️ _stops the music playing and the selfbot leave the channel._
+  * **`$loop`**
+▶️ _loop the current music, re enter the command to stop._
+  * **`$queue`**
+▶️ _show the musics in the queue._
   
 ## 💡 Features
 
