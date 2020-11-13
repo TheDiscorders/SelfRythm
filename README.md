@@ -34,10 +34,11 @@ This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's
 Start the bot by doing **`npm start	`** in a terminal in the folder.
 
 * Commands :
-  * **`$join`**
-▶️_makes the selfbot joins the channel you're in_
+
   * **`$play {url}`**
 ▶️ _makes the selfbot joins the channel you're in and starts playing the sound from the link, if there is already a music playing it adds it to a queue._
+  * **`$come`**
+▶️_makes the selfbot move to the voice channel you're in_
   * **`$skip`**
 ▶️ _skips the current music playing._
   * **`$stop`**
