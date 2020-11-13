@@ -1,5 +1,6 @@
-const strings = require("../strings.json");
 const ytdl = require("ytdl-core");
+
+const strings = require("../strings.json");
 const utils = require("../utils");
 
 /** 
