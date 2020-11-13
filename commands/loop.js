@@ -13,10 +13,10 @@ module.exports.run = async (client, message, args) => {
 
     if(queue.get(message.guild.id.loop) === "off") {
         queue.set(message.guild.id.loop, "on"); 
-        message.channel.send(strings.loopOn.replace("SONG_TITLE", serverQueue.songs[0].title).replace("url", serverQueue.songs[0].url));
+        message.channel.send(strings.loopOn.replace("SONG_TITLE", serverQueue.songs[0].title));
     } else {
         queue.set(message.guild.id.loop, "off"); 
-        message.channel.send(strings.loopOff.replace("SONG_TITLE", serverQueue.songs[0].title).replace("url", serverQueue.songs[0].url));
+        message.channel.send(strings.loopOff.replace("SONG_TITLE", serverQueue.songs[0].title));
     };
 
 }

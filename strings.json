@@ -10,7 +10,7 @@
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue\n<url>",
     "musicStopped": "✅ Music stopped",
     "musicSkipped": "✅ Music skipped",
-    "loopOn": "✅ Looping **SONG_TITLE**\n<url>",
-    "loopOff": "✅ Stopped looping **SONG_TITLE**\n<url>",
+    "loopOn": "✅ Looping **SONG_TITLE**",
+    "loopOff": "✅ Stopped looping **SONG_TITLE**",
     "musicsQueued": ":musical_note: **Musics queued** :musical_note: :"
 }
