@@ -1,3 +1,5 @@
+const table = require("ascii-table");
+const AsciiTable = require("ascii-table/ascii-table");
 module.exports = {
     log: function(content) {
         date_ob = new Date();
@@ -19,8 +21,8 @@ module.exports = {
         hms = date_ob.toLocaleTimeString();
       
         console.log(`[ ${dmy} | ${hms} ] ${content}`)
-      },
-      isURL: function (url) {
+    },
+    isURL: function (url) {
         if(!url) return false;
         var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
             '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
@@ -30,5 +32,13 @@ module.exports = {
             '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
             '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
         return pattern.test(url);
+    },
+    showTable: function(loaded){
+        var table = new AsciiTable('Loaded content')
+        table.setHeading("Events","Commands")
+        for(let i=0; i<=Math.max(loaded.events.length, loaded.commands.length)-1; i++){
+            table.addRow(loaded.events[i], loaded.commands[i])
+        }
+        return table.render()
     }
 }
