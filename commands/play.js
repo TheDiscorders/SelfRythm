@@ -29,7 +29,7 @@ function play(guild, song) {
     const dispatcher = serverQueue.connection.play(ytdl(song.url), {
         filter: 'audioonly',
         quality: 'highestaudio',
-        highWaterMark: 25
+        highWaterMark: 100
     })
 
     .on('finish', () => {
@@ -47,7 +47,7 @@ function play(guild, song) {
         /* Logs errors with the log function from utils that add the date, hour, minute and second of the log */
         console.log(error)
 
-    })
+    });
     
     /* Set default volume serverQueue.volume defined in queueConstruct */
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
@@ -83,7 +83,7 @@ module.exports.run = async (client, message, args) => {
         */
         FUrl = await utils.getUrl(args)
 
-    }
+    };
 
     /* Creates a variable containing the voice channel that the member who used the command is in */
     let voiceChannel = message.member.voice.channel; 
@@ -99,7 +99,7 @@ module.exports.run = async (client, message, args) => {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
         url: FUrl
-    }
+    };
 
     /* Check if the server music queue doesn't exist */
     if(!serverQueue) {
@@ -116,10 +116,10 @@ module.exports.run = async (client, message, args) => {
         };
 
         /* Adds a queue filed with custom data with the 'queueConstruct' format to the global Map 'queue' defined in index.js */
-        queue.set(message.guild.id, queueConstruct)
+        queue.set(message.guild.id, queueConstruct);
 
         /* Push the a song object (defined by 'const song =') filled with custom data into the list of songs in the queue added 2 lines above */
-        queueConstruct.songs.push(song)
+        queueConstruct.songs.push(song);
         
         /* 
             Send the message 'startedPlaying' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.startedPlaying', by the  real song title 
@@ -151,7 +151,7 @@ module.exports.run = async (client, message, args) => {
 
             /* Then send the message 'notInVocal' defined in 'strings.json' in the channel where the message has been sent */
             return message.channel.send(strings.notInVocal);
-        }
+        };
     } else {
 
         /* If the server music queue already exist just adds the new song object defined earlier at the end of the 'songs' list in the 'serverQueue' object located in the Map 'queue' */
@@ -162,6 +162,6 @@ module.exports.run = async (client, message, args) => {
             present in the song object. Does the same with 'url' and the url defined in the song object. It sends it in the channel where the command has been used.
         */
         return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title).replace("url", song.url));
-    }
+    };
 
 };
