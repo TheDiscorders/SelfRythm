@@ -5,6 +5,8 @@ const Enmap = require('enmap');
 const config = require(`./config`)
 const utils = require('./utils')
 
+utils.log("Logging in...")
+
 global.queue = new Map();
 
 

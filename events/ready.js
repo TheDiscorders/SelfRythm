@@ -1,7 +1,9 @@
+const utils = require('../utils');
+
 module.exports = client => {
 
-    client.user.setActivity("gud music", {type: "LISTENING"})
+    client.user.setActivity("gud music", {type: "LISTENING"});
 
-    console.log(`Logged in as ${client.user.tag}!`)
+    utils.log(`Logged in as ${client.user.tag} !`);
 
 };
