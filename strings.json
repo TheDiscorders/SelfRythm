@@ -3,8 +3,13 @@
     "notInVocal" : "❌ You have to be in a voice channel to do this",
     "noLink" : "❌ You need to provide a link",
     "nothingPlaying": "❌ There is nothing playing",
+    "noSongsQueued": "❌ No songs queued",
+    "cantLoop": "❌ You need to have a song playing to loop it",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue",
     "musicStopped": "✅ Music stopped",
-    "musicSkipped": "✅ Music skipped"
+    "musicSkipped": "✅ Music skipped",
+    "loopOn": "✅ Looping **SONG_TITLE**",
+    "loopOff": "✅ Stopped looping **SONG_TITLE**",
+    "musicsQueued": ":musical_note: **Musics queued** :musical_note: :"
 }
