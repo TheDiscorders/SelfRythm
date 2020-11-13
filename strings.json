@@ -3,6 +3,7 @@
     "notInVocal" : "❌ You have to be in a voice channel to do this",
     "noLink" : "❌ You need to provide a link",
     "nothingPlaying": "❌ There is nothing playing",
+    "badUrl": "❌ Invalid link provided",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue",
     "musicStopped": "✅ Music stopped",

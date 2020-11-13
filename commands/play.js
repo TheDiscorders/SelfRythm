@@ -24,21 +24,11 @@ function play(guild, song) {
 
 }
 
-function isURL(url) {
-    if(!url) return false;
-    var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-        '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-        '((\\d{1,3}\\.){3}\\d{1,3}))|' + // OR ip (v4) address
-        'localhost' + // OR localhost
-        '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-        '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-        '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
-    return pattern.test(url);
-}
+
 
 module.exports.run = async (client, message, args) => {
 
-    if(!args[0] || !isURL(args[0])) return message.channel.send(strings.noLink);
+    if(!args[0] || !utils.isURL(args[0])) return message.channel.send(strings.noLink);
 
     let voiceChannel = message.member.voice.channel; 
 
