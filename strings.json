@@ -5,6 +5,7 @@
     "nothingPlaying": "❌ There is nothing playing",
     "noSongsQueued": "❌ No songs queued",
     "cantLoop": "❌ You need to have a song playing to loop it",
+    "badUrl": "❌ Invalid link provided",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue",
     "musicStopped": "✅ Music stopped",
