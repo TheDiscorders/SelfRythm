@@ -13,6 +13,7 @@ First you need to download the repository and put all the files in a folder. The
     * **[discord.js-selfbot](https://www.npmjs.com/package/discord.js-selfbot)**
     * **[enmap](https://www.npmjs.com/package/enmap)**
     * **[ytdl-core](https://www.npmjs.com/package/ytdl-core)**
+    * **[ascii-table](https://www.npmjs.com/package/ascii-table)**
   
 * Private data
   * The token and the prefix can be changed in the **config.js**  file
