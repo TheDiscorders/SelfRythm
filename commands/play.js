@@ -16,7 +16,11 @@ function play(guild, song) {
         return queue.delete(guild.id);
     }
 
-    const dispatcher = serverQueue.connection.play(ytdl(song.url))
+    const dispatcher = serverQueue.connection.play(ytdl(song.url), {
+        filter: 'audioonly',
+        quality: 'highestaudio',
+        highWaterMark: 1 << 25
+    })
     .on('finish', () => {
         if(queue.get(guild.id.loop) === "off") serverQueue.songs.shift();
         play(guild, serverQueue.songs[0]);
