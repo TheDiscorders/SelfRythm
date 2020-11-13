@@ -22,12 +22,13 @@ function play(guild, song) {
         highWaterMark: 1 << 25
     })
     .on('finish', () => {
-        if(queue.get(guild.id.loop) === "off") serverQueue.songs.shift();
+        if(serverQueue.loop === false) serverQueue.songs.shift();
         play(guild, serverQueue.songs[0]);
     })
-    .on('error', errors => {
-        utils.log(errors);
-    });
+    .on('error', error => {
+        console.log(error)
+    })
+    
 
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
@@ -69,11 +70,11 @@ module.exports.run = async (client, message, args) => {
             connection: null,
             songs: [],
             volume: 5,
-            playing: true
+            playing: true,
+            loop: false
         };
         queue.set(message.guild.id, queueConstruct)
         queueConstruct.songs.push(song)
-        queue.set(message.guild.id.loop, "off");
 
         if (voiceChannel != null) { 
             var connection = await voiceChannel.join();

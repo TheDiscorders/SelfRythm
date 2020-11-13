@@ -20,8 +20,11 @@ module.exports.run = async (client, message, args) => {
         var seconds = serverQueue.songs[i].duration % 60;
         if(seconds.length === 1) seconds = "0" + seconds
 
-        if(serverQueue.loop === "on" && i===0) { queuetxt = "🔄" + queuetxt}
-        queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) ${serverQueue.songs[i].title}\`\`\n`;
+        if(serverQueue.loop === true && i===0) { 
+            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) 🔄 ${serverQueue.songs[i].title}\`\`\n`;
+        } else {
+            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) ${serverQueue.songs[i].title}\`\`\n`;
+        }
     };
 
     message.channel.send(strings.musicsQueued + "\n" + queuetxt);
