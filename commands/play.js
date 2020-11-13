@@ -13,7 +13,7 @@ function play(guild, song) {
 
     const dispatcher = serverQueue.connection.play(ytdl(song.url))
     .on('finish', () => {
-        serverQueue.songs.shift();
+        if(queue.get(guild.id.loop) === "off") serverQueue.songs.shift();
         play(guild, serverQueue.songs[0]);
     })
     .on('error', errors => {
@@ -51,6 +51,7 @@ module.exports.run = async (client, message, args) => {
         };
         queue.set(message.guild.id, queueConstruct)
         queueConstruct.songs.push(song)
+        queue.set(message.guild.id.loop, "off");
 
         if (voiceChannel != null) { 
             var connection = await voiceChannel.join();
