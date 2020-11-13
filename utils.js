@@ -59,7 +59,7 @@ module.exports = {
         stringOfWords = words.join(" ");
 
         lookingOnYtb = new Promise(async (resolve) => {
-            YouTube.search("madison baby", { limit: 1 })
+            YouTube.search(stringOfWords, { limit: 1 })
                 .then(result => {
                     resolve("https://www.youtube.com/watch?v=" + result[0].id)
                 })
