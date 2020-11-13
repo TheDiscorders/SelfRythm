@@ -1,6 +1,7 @@
 module.exports = {
     token: "your token",
-    prefix: "your prefix"
+    prefix: "your prefix",
+    ytbApiKey: "your youtube API key"
 };
 
 /* remove .example from the name of this file */
