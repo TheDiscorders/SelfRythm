@@ -1,33 +1,43 @@
 # Self Rythm Bot
 
 # USING SELFBOTS ARE AGAINST DISCORD TOS, THE USAGE OF A SELFBOT MAY RESULT IN A BAN OF YOUR ACCOUNT, WE ARE NOT RESPONSIBLE FOR ANY USAGE OF THE BOT
+
+## ⚠ Warning
+
+We created that for fun, we don't encourage you to use selfbots to create trouble on public servers and we won't do so.
 ## What is this shit ?
 
-This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. His purpose is to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot. This has many advantages, for example you can use it on any servs you're in, even without permissions.
+This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's made to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot, this mean it can be used with a user account. This has many advantages, for example you can use it on any servs you're in, even without permissions.
 
 ## ⛓ Configuration
-
-First you need to download the repository and put all the files in a folder. Then open a console **in this folder** and install the following modules : 
-
-- Install the modules with `npm i`
+1) Create a Discord account and get the token
+2) Clone the repository and navigate in the folder
+3) Install all the modules with `npm i`
+- Installed modules
     * **[discord.js-selfbot](https://www.npmjs.com/package/discord.js-selfbot)**
     * **[enmap](https://www.npmjs.com/package/enmap)**
     * **[ytdl-core](https://www.npmjs.com/package/ytdl-core)**
     * **[ascii-table](https://www.npmjs.com/package/ascii-table)**
-  
-* Private data
-  * The token and the prefix can be changed in the **config.js**  file
-  * Allowed user ids can be changed in the **allowed.json** file 
-  * The messages that says the bot can be changed in the **strings.json** file
-  
- 
+4) Configure the bot with your personnal creditentials
+* Values to provide: 
+  * In the `config.js` file
+	  * The user account token
+	  * The bot's prefix
+  *  In the `allowed.json` file
+	  * An array of user's IDs that can control the bot	
+  * In the `strings.json` file, you can make custom messages
+
+5) Add an ffmpeg build to system PATH
+
 ## 👌 Usage
 
-Start the bot by doing **`node .`** in a terminal in the folder.
+Start the bot by doing **`npm start	`** in a terminal in the folder.
 
 * Commands :
+  * **`$join`**
+▶️_makes the selfbot joins the channel you're in_
   * **`$play {url}`**
-▶️ _the selfbot joins the channel you're in and starts playing the sound from the link, if there is already a music playing it adds it to a queue._
+▶️ _makes the selfbot joins the channel you're in and starts playing the sound from the link, if there is already a music playing it adds it to a queue._
   * **`$skip`**
 ▶️ _skips the current music playing._
   * **`$stop`**
@@ -45,5 +55,5 @@ Start the bot by doing **`node .`** in a terminal in the folder.
 	* add it on each discord server you're in
 	* customize the list of users allowed to use it
 
-## 🙏 Thanks
-Thanks to **Firokat** for help and ideas on this project
+ ## Alternative usage
+The selfbot can be used as a regular bot, just change the token for a bot's one
