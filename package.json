@@ -19,9 +19,11 @@
   "dependencies": {
     "@discordjs/opus": "^0.3.3",
     "ascii-table": "0.0.9",
+    "axios-cookiejar-support": "^1.0.1",
     "discord.js-selfbot": "^12.0.2",
     "enmap": "^5.8.2",
     "youtube-search": "^1.1.4",
+    "youtube-sr": "^1.0.7",
     "ytdl-core": "^4.0.3"
   }
 }
