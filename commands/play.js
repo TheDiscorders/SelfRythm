@@ -26,8 +26,10 @@ function play(guild, song) {
 
     utils.log(`Started playing the music : ${song.title}`)
 
-    /* Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[] */
-    /* Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs */
+    /* 
+        Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[]
+        Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs 
+    */
 
     const dispatcher = serverQueue.connection.play(ytdl(song.url, {
         filter: 'audioonly',
