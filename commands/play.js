@@ -28,13 +28,14 @@ function play(guild, song) {
 
     /* Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[] */
     /* Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs */
-    const dispatcher = serverQueue.connection.play(ytdl(song.url), {
+
+    const dispatcher = serverQueue.connection.play(ytdl(song.url, {
         filter: 'audioonly',
         quality: 'highestaudio',
-        highWaterMark: 5000
-    })
+        highWaterMark: 1 << 25
+    }));
 
-    .on('finish', () => {
+    dispatcher.on('finish', () => {
 
         if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
         else utils.log(`Finished playing the music, no more musics in the queue`)
@@ -47,7 +48,7 @@ function play(guild, song) {
 
     })
 
-    .on('error', error => {
+    dispatcher.on('error', error => {
 
         /* Logs errors with the log function from utils that add the date, hour, minute and second of the log */
         console.log(error)

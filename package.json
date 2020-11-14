@@ -22,6 +22,7 @@
     "discord.js-selfbot": "^12.0.2",
     "enmap": "^5.8.2",
     "ffmpeg": "0.0.4",
+    "opusscript": "0.0.7",
     "youtube-sr": "^1.0.7",
     "ytdl-core": "^4.0.3"
   }
