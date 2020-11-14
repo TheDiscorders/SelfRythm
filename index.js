@@ -40,7 +40,7 @@ fs.readdir('./commands/', async (err, files) => {
     loaded.commands.push(cmdName)
     client.commands.set(cmdName, props);
   });
-  promise.then(() => {console.log(utils.showTable(loaded))}).catch(errors => {console.log('some errors here')})
+  promise.then(() => {utils.log(`Table of commands and events :\n${utils.showTable(loaded)}`)});
 });
 
 
