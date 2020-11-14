@@ -121,15 +121,15 @@ module.exports.run = async (client, message, args) => {
 
         /* Push the a song object (defined by 'const song =') filled with custom data into the list of songs in the queue added 2 lines above */
         queueConstruct.songs.push(song);
-        
-        /* 
-            Send the message 'startedPlaying' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.startedPlaying', by the  real song title 
-            present in the song object. Does the same with 'url' and the url defined in the song object. It sends it in the channel where the command has been used.
-        */
-        message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title).replace("url", song.url));
 
         /* Checks if the user is in a voice channel */
         if (voiceChannel != null) { 
+
+            /* 
+                Send the message 'startedPlaying' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.startedPlaying', by the  real song title 
+                present in the song object. Does the same with 'url' and the url defined in the song object. It sends it in the channel where the command has been used.
+            */
+            message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title).replace("url", song.url));
 
             /* Create the connection variable that contains the voice channel */
             var connection = await voiceChannel.join();
