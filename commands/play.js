@@ -94,11 +94,12 @@ module.exports.run = async (client, message, args) => {
     /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
     const songInfo = await ytdl.getInfo(FUrl, {filter: "audioonly"});
 
-    /* Puts in an object from the song title, duration in seconds and url */
+    /* Puts in an object from the song title, duration in seconds, url and he person who requsted the song */
     const song = {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
-        url: FUrl
+        url: FUrl,
+        requestedby: message.author.tag
     };
 
     /* Check if the server music queue doesn't exist */
