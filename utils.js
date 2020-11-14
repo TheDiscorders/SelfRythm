@@ -49,9 +49,9 @@ module.exports = {
      */
     showTable: function(loaded){
         var table = new AsciiTable('Loaded content')
-        table.setHeading("Events","Commands")
-        for(let i=0; i<=Math.max(loaded.events.length, loaded.commands.length)-1; i++){
-            table.addRow(loaded.events[i], loaded.commands[i])
+        table.setHeading("Commands","Events")
+        for(let i=0; i<=Math.max(loaded.commands.length, loaded.events.length)-1; i++){
+            table.addRow(loaded.commands[i], loaded.events[i])
         }
         return table.render()
     },

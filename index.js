@@ -16,28 +16,32 @@ var loaded = {
   events: [],
   commands: []
 }
-fs.readdir('./events/', (err, files) => {
-  if (err) return console.error;
-  files.forEach(file => {
-    if (!file.endsWith('.js')) return;
-    const evt = require(`./events/${file}`);
-    let evtName = file.split('.')[0];
-    loaded.events.push(evtName)
-    client.on(evtName, evt.bind(null, client));
-  });
-});
-
-fs.readdir('./commands/', async (err, files) => {
+var promise = new Promise((resolve) => {
+  fs.readdir('./events/', (err, files) => {
     if (err) return console.error;
     files.forEach(file => {
       if (!file.endsWith('.js')) return;
-      let props = require(`./commands/${file}`);
-      let cmdName = file.split('.')[0];
-      loaded.commands.push(cmdName)
-      client.commands.set(cmdName, props);
+      const evt = require(`./events/${file}`);
+      let evtName = file.split('.')[0];
+      loaded.events.push(evtName)
+      client.on(evtName, evt.bind(null, client));
     });
-    console.log(utils.showTable(loaded))
+    resolve();
+  })
+})
+
+
+fs.readdir('./commands/', async (err, files) => {
+  if (err) return console.error;
+  files.forEach(file => {
+    if (!file.endsWith('.js')) return;
+    let props = require(`./commands/${file}`);
+    let cmdName = file.split('.')[0];
+    loaded.commands.push(cmdName)
+    client.commands.set(cmdName, props);
   });
+  promise.then(() => {console.log(utils.showTable(loaded))}).catch(errors => {console.log('some errors here')})
+});
 
 
 client.login(config.token)
