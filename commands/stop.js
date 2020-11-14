@@ -1,5 +1,6 @@
 const strings = require("../strings.json");
 const utils = require("../utils");
+
 /** 
  * @description Stops the music and make the bot leave the channel
  * @param {Discord.Client} client the client thats runs the commands
@@ -18,6 +19,7 @@ module.exports.run = async (client, message, args) => {
     serverQueue.songs = [];
 
     try {
+        utils.log("Stopped playing music")
         serverQueue.connection.dispatcher.end();
     } catch(e) {utils.log("Spamming doesn't make things faster :)")}
     return message.channel.send(strings.musicStopped);
