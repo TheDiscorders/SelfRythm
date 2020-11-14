@@ -21,9 +21,9 @@ module.exports.run = async (client, message, args) => {
         if(seconds.length === 1) seconds = "0" + seconds
 
         if(serverQueue.loop === true && i===0) { 
-            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) 🔄 ${serverQueue.songs[i].title}\`\`\n`;
+            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) 🔄 ${serverQueue.songs[i].title} requested by ${serverQueue.songs[i].requestedby}\`\`\n`;
         } else {
-            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) ${serverQueue.songs[i].title}\`\`\n`;
+            queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) ${serverQueue.songs[i].title} requested by ${serverQueue.songs[i].requestedby}\`\`\n`;
         }
     };
 
