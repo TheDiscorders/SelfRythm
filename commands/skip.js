@@ -17,15 +17,14 @@ module.exports.run = async (client, message, args) => {
     const serverQueue = queue.get(message.guild.id);
     if(!serverQueue){return message.channel.send(strings.nothingPlaying);};
 
+    utils.log(`Skipped music : ${serverQueue.songs[0].title}`)
 
-    try {
-        utils.log(`Skipped music : ${serverQueue.songs[0].title}`)
-        serverQueue.connection.dispatcher.end();
-    } catch(e) {utils.log("Spamming doesn't make things faster :)")}
+    serverQueue.connection.dispatcher.end();
+
     return message.channel.send(strings.musicSkipped);
 
 };
 
-module.exports.help = {
-    name: 'skip'
+module.exports.names = {
+    list: ["skip", "s"]
 }; 

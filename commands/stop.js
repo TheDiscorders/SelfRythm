@@ -18,14 +18,15 @@ module.exports.run = async (client, message, args) => {
 
     serverQueue.songs = [];
 
-    try {
-        utils.log("Stopped playing music")
-        serverQueue.connection.dispatcher.end();
-    } catch(e) {utils.log("Spamming doesn't make things faster :)")}
+
+    utils.log("Stopped playing music")
+
+    serverQueue.connection.dispatcher.end();
+
     return message.channel.send(strings.musicStopped);
 
 };
 
-module.exports.help = {
-    name: 'stop'
-};
+module.exports.names = {
+    list: ["stop", "st"]
+}; 

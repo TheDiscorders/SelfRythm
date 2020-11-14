@@ -23,3 +23,7 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(strings.loopOff.replace("SONG_TITLE", serverQueue.songs[0].title));
     };
 }
+
+module.exports.names = {
+    list: ["loop", "l"]
+}; 

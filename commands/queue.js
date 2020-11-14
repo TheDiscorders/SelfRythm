@@ -30,6 +30,9 @@ module.exports.run = async (client, message, args) => {
 
     utils.log("Showed music queue")
     return message.channel.send(strings.musicsQueued + "\n" + queuetxt);
-
-
 }
+
+
+module.exports.names = {
+    list: ["queue", "q"]
+}; 

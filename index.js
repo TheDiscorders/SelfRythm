@@ -36,9 +36,11 @@ fs.readdir('./commands/', async (err, files) => {
   files.forEach(file => {
     if (!file.endsWith('.js')) return;
     let props = require(`./commands/${file}`);
+    props.names.list.forEach(name => {
+      client.commands.set(name, props);
+    })
     let cmdName = file.split('.')[0];
     loaded.commands.push(cmdName)
-    client.commands.set(cmdName, props);
   });
   promise.then(() => {utils.log(`Table of commands and events :\n${utils.showTable(loaded)}`)});
 });
