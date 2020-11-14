@@ -24,6 +24,8 @@ function play(guild, song) {
         return queue.delete(guild.id);
     }
 
+    utils.log(`Started playing the music : ${song.title}`)
+
     /* Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[] */
     /* Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs */
     const dispatcher = serverQueue.connection.play(ytdl(song.url), {
@@ -33,6 +35,9 @@ function play(guild, song) {
     })
 
     .on('finish', () => {
+
+        if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
+        else utils.log(`Finished playing the music, no more musics in the queue`)
 
         /* Clear the first of element of songs if loop is equal to 'off' */
         if(serverQueue.loop === false) serverQueue.songs.shift();
@@ -69,6 +74,8 @@ module.exports.run = async (client, message, args) => {
     /* Returns the message 'strings.noLink' defined in 'strings.json' in the channel where the command came from*/
     if(!args[0]) return message.channel.send(strings.noArgs);
 
+    utils.log("Looking for music details...")
+
     /* Check if the argument provided is an URL with the function 'isURL' defined in 'utils.js' */
     if(utils.isURL(args[0])){
 
@@ -101,6 +108,8 @@ module.exports.run = async (client, message, args) => {
         url: FUrl,
         requestedby: message.author.tag
     };
+
+    utils.log("Got music details, preparing the music to be played...")
 
     /* Check if the server music queue doesn't exist */
     if(!serverQueue) {
@@ -157,6 +166,8 @@ module.exports.run = async (client, message, args) => {
 
         /* If the server music queue already exist just adds the new song object defined earlier at the end of the 'songs' list in the 'serverQueue' object located in the Map 'queue' */
         serverQueue.songs.push(song);
+
+        utils.log(`Added music to the queue : ${song.title}`)
 
         /* 
             Send the message 'songAddedToQueue' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.songAddedToQueue', by the  real song title 

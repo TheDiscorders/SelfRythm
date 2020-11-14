@@ -1,5 +1,6 @@
 const strings = require("../strings.json");
 const utils = require("../utils");
+
 /** 
  * @description Skip the current song
  * @param {Discord.Client} client the client thats runs the commands
@@ -18,6 +19,7 @@ module.exports.run = async (client, message, args) => {
 
 
     try {
+        utils.log(`Skipped music : ${serverQueue.songs[0].title}`)
         serverQueue.connection.dispatcher.end();
     } catch(e) {utils.log("Spamming doesn't make things faster :)")}
     return message.channel.send(strings.musicSkipped);

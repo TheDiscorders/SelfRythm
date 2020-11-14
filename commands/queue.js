@@ -1,4 +1,5 @@
 const strings = require("../strings.json");
+const utils = require("../utils");
 
 /** 
  * @description Show the guild's song queue
@@ -27,7 +28,8 @@ module.exports.run = async (client, message, args) => {
         }
     };
 
-    message.channel.send(strings.musicsQueued + "\n" + queuetxt);
+    utils.log("Showed music queue")
+    return message.channel.send(strings.musicsQueued + "\n" + queuetxt);
 
 
 }
