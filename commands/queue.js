@@ -15,9 +15,9 @@ module.exports.run = async (client, message, args) => {
     queuetxt = "";
     
     for(let i=0;i<serverQueue.songs.length;i++){
-        var minutes = Math.floor(serverQueue.songs[i].duration / 60);
+        var minutes = `${Math.floor(serverQueue.songs[i].duration / 60)}`;
         if(minutes.length === 1) minutes = "0" + minutes
-        var seconds = serverQueue.songs[i].duration % 60;
+        var seconds = `${serverQueue.songs[i].duration % 60}`;
         if(seconds.length === 1) seconds = "0" + seconds
 
         if(serverQueue.loop === true && i===0) { 

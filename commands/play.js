@@ -29,7 +29,7 @@ function play(guild, song) {
     const dispatcher = serverQueue.connection.play(ytdl(song.url), {
         filter: 'audioonly',
         quality: 'highestaudio',
-        highWaterMark: 100
+        highWaterMark: 5000
     })
 
     .on('finish', () => {
@@ -92,7 +92,7 @@ module.exports.run = async (client, message, args) => {
     const serverQueue = queue.get(message.guild.id);
 
     /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
-    const songInfo = await ytdl.getInfo(FUrl, {filter: "audioonly"});
+    const songInfo = await ytdl.getBasicInfo(FUrl, {filter: "audioonly"});
 
     /* Puts in an object from the song title, duration in seconds, url and he person who requsted the song */
     const song = {
