@@ -35,4 +35,4 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.names = {
     list: ["queue", "q"]
-}; 
+};

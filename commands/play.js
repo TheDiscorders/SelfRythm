@@ -102,7 +102,7 @@ module.exports.run = async (client, message, args) => {
     const serverQueue = queue.get(message.guild.id);
 
     /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
-    const songInfo = await ytdl.getBasicInfo(FUrl, {filter: "audioonly"});
+    const songInfo = await ytdl.getBasicInfo(FUrl);
 
     /* Puts in an object from the song title, duration in seconds, url and he person who requsted the song */
     const song = {
@@ -183,4 +183,4 @@ module.exports.run = async (client, message, args) => {
 
 module.exports.names = {
     list: ["play", "p"]
-}; 
+};
