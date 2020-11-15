@@ -14,7 +14,7 @@ module.exports.run = async (client, message, args) => {
 
     if (!voiceChannel) {return message.channel.send(strings.notInVocal);};
 
-    const serverQueue = queue.get(message.guild.id);
+    const serverQueue = queue.get("queue");
     if(!serverQueue){return message.channel.send(strings.nothingPlaying);};
 
     utils.log(`Skipped music : ${serverQueue.songs[0].title}`)

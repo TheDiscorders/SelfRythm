@@ -9,11 +9,7 @@ const utils = require("../utils");
  */
 module.exports.run = async (client, message, args) => {
 
-    let voiceChannel = message.member.voice.channel; 
-
-    if (!voiceChannel) {return message.channel.send(strings.notInVocal);};
-
-    const serverQueue = queue.get(message.guild.id);
+    const serverQueue = queue.get("queue");
     if(!serverQueue){return message.channel.send(strings.nothingPlaying);};
 
     serverQueue.songs = [];

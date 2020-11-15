@@ -9,7 +9,7 @@ const utils = require("../utils");
  */
 module.exports.run = async (client, message, args) => {
 
-    const serverQueue = queue.get(message.guild.id);
+    const serverQueue = queue.get("queue");
 
     if(!serverQueue){return message.channel.send(strings.cantLoop)}
 

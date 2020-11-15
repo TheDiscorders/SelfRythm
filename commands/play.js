@@ -5,63 +5,6 @@ const ytdl = require("ytdl-core");
 const strings = require("../strings.json");
 const utils = require("../utils");
 
-/** 
- * @description Play a song
- * @param {Discord.Guild} guild The guild to play the song on, as a
- * @param song The song to be played
- */
-
- /* Play function */
-
-function play(guild, song) {
-
-    /* Gets the map 'queue' defined in index.js and gets the branch managing the concerned guild */
-    const serverQueue = queue.get(guild.id);
-
-    /* Make the bot leave the channel if no songs are played, then delete the branch the branch managing the concerned guild */
-    if(!song){
-        serverQueue.voiceChannel.leave();
-        return queue.delete(guild.id);
-    }
-
-    utils.log(`Started playing the music : ${song.title}`)
-
-    /* 
-        Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[]
-        Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs 
-    */
-
-    const dispatcher = serverQueue.connection.play(ytdl(song.url, {
-        filter: 'audioonly',
-        quality: 'highestaudio',
-        highWaterMark: 1 << 25
-    }));
-
-    dispatcher.on('finish', () => {
-
-        if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
-        else utils.log(`Finished playing the music, no more musics in the queue`)
-
-        /* Clear the first of element of songs if loop is equal to 'off' */
-        if(serverQueue.loop === false) serverQueue.songs.shift();
-
-        /* Plays the first element of songs */
-        play(guild, serverQueue.songs[0]);
-
-    })
-
-    dispatcher.on('error', error => {
-
-        /* Logs errors with the log function from utils that add the date, hour, minute and second of the log */
-        console.log(error)
-
-    });
-    
-    /* Set default volume serverQueue.volume defined in queueConstruct */
-    dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-}
-
 
 /** 
  * @description Play a song with the provided link
@@ -99,7 +42,7 @@ module.exports.run = async (client, message, args) => {
     let voiceChannel = message.member.voice.channel; 
 
     /* Gets the branch of the Map 'queue' defined in 'index.js' corresponding the the discord server where the command has been used */
-    const serverQueue = queue.get(message.guild.id);
+    const serverQueue = queue.get("queue");
 
     /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
     const songInfo = await ytdl.getBasicInfo(FUrl);
@@ -129,7 +72,7 @@ module.exports.run = async (client, message, args) => {
         };
 
         /* Adds a queue filed with custom data with the 'queueConstruct' format to the global Map 'queue' defined in index.js */
-        queue.set(message.guild.id, queueConstruct);
+        queue.set("queue", queueConstruct);
 
         /* Push the a song object (defined by 'const song =') filled with custom data into the list of songs in the queue added 2 lines above */
         queueConstruct.songs.push(song);
@@ -155,12 +98,12 @@ module.exports.run = async (client, message, args) => {
             
                 The model is added earlier into the map then it's customized with custom data, being in a specific location it doesn't impact the model for the following songs.
             */
-            play(message.guild, queueConstruct.songs[0]);
+            utils.play(queueConstruct.songs[0]);
 
         } else {
 
             /* If no queue exists, deletes the branch of the implicated guild in the Map 'queue' defined in 'index.js' */
-            queue.delete(message.guild.id);
+            queue.delete("queue");
 
             /* Then send the message 'notInVocal' defined in 'strings.json' in the channel where the message has been sent */
             return message.channel.send(strings.notInVocal);
