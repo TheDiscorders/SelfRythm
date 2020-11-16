@@ -15,19 +15,15 @@ module.exports = {
         month = date_ob.getMonth().toString();
         year = date_ob.getFullYear().toString();
       
-        if(date.length === 1){
-            date = "0" + date
-        }
-        if(month.length === 1){
-            month = "0" + month
-        }
+        if(date.length === 1){date = "0" + date;};
+        if(month.length === 1){month = "0" + month;};
         
-        dmy = date + "/" + month + "/" + year
+        dmy = date + "/" + month + "/" + year;
       
         /* Gets hours, minutes and seconds */ 
         hms = date_ob.toLocaleTimeString();
       
-        console.log(`[ ${dmy} | ${hms} ] ${content}`)
+        console.log(`[ ${dmy} | ${hms} ] ${content}`);
     },
     /**
      * @description Checks if the provided string is an url 
@@ -49,12 +45,12 @@ module.exports = {
      * @param {Object} loaded 
      */
     showTable: function(loaded){
-        var table = new AsciiTable('Loading content...')
-        table.setHeading("Commands","Events")
+        var table = new AsciiTable('Loading content...');
+        table.setHeading("Commands","Events");
         for(let i=0; i<=Math.max(loaded.commands.length, loaded.events.length)-1; i++){
-            table.addRow(loaded.commands[i], loaded.events[i])
-        }
-        return table.render()
+            table.addRow(loaded.commands[i], loaded.events[i]);
+        };
+        return table.render();
     },
     getUrl: async function (words){
         stringOfWords = words.join(" ");
@@ -62,8 +58,8 @@ module.exports = {
         lookingOnYtb = new Promise(async (resolve) => {
             YouTube.search(stringOfWords, { limit: 1 })
                 .then(result => {
-                    resolve("https://www.youtube.com/watch?v=" + result[0].id)
-                })
+                    resolve("https://www.youtube.com/watch?v=" + result[0].id);
+                });
         });
 
         let link = await lookingOnYtb;
@@ -79,28 +75,27 @@ module.exports = {
             serverQueue.voiceChannel.leave();
             return queue.delete("queue");
         }
-    
+
         utils.log(`Started playing the music : ${song.title}`)
-    
+
         const dispatcher = serverQueue.connection.play(ytdl(song.url, {
             filter: 'audioonly',
             quality: 'highestaudio',
             highWaterMark: 1 << 25
         }));
-    
+
         dispatcher.on('finish', () => {
             if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`);
             else utils.log(`Finished playing all musics, no more musics in the queue`);
             if(serverQueue.loop === false || serverQueue.skipped === true) serverQueue.songs.shift();
             if(serverQueue.skipped === true) serverQueue.skipped = false;
             utils.play(serverQueue.songs[0]);
-        })
-    
+        });
+
         dispatcher.on('error', error => {
             console.log(error)
         });
 
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     }
-    
 }
