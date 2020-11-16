@@ -38,7 +38,7 @@ Start the bot by doing **`npm start	`** in a terminal in the folder.
   * **`$play {url}`**
 ▶️ _makes the selfbot joins the channel you're in and starts playing the sound from the link, if there is already a music playing it adds it to a queue._
   * **`$join`**
-▶️_makes the selfbot move to the voice channel you're in (music needs to be playing)_
+▶️ _makes the selfbot move to the voice channel you're in (music needs to be playing)_
   * **`$skip`**
 ▶️ _skips the current music playing._
   * **`$stop`**
