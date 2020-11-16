@@ -12,6 +12,7 @@
     "toMuchArgsVolume": "❌ They are too many arguments, please provide a single number",
     "volumeToHigh": "❌ Volume can't be above 10",
     "noNumber": "❌ You need to provide number (1 being 100% about the right volume)",
+    "earrapeFail": "❌ Conditions not completed in 8sec, earrape mod canceled",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing\n<url>",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue\n<url>",
     "musicStopped": "✅ Music stopped",
@@ -20,6 +21,8 @@
     "loopOff": ":repeat_one: **Disabled !**",
     "joinMsg": "✅ Joinned succesfully the voice channel",
     "volumeChanged": "✅ The volume was successfully set to VOLUME",
+    "startEarrape" : "✅ The volume was successfully set to ___**EARRAPE**___ :ear: :headstone:",
+    "endEarrape" : "✅ The volume was successfully set back to VOLUME",
     "musicsQueued": ":musical_note: **Musics queued** :musical_note: :",
-    "earrapeWarning": "⚠ Are you sure ? It can severely damage the hearing of all people in the channel !\nTo continue:\n1)Change your custom status to \"yes\"\n2) Press the ✅ reaction"
+    "earrapeWarning": "⚠ Are you sure ? It can severely damage the hearing of all people in the channel !\nPress the ✅ reaction to continue"
 }
