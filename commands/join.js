@@ -33,7 +33,7 @@ module.exports.run = async (client, message, args) => {
             voiceChannel: voiceChannel,
             connection: null,
             songs: songs,
-            volume: 5,
+            volume: serverQueue.volume,
             playing: true,
             loop: serverQueue.loop
         };
