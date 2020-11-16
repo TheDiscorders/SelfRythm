@@ -89,9 +89,10 @@ module.exports = {
         }));
     
         dispatcher.on('finish', () => {
-            if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
-            else utils.log(`Finished playing the music, no more musics in the queue`)
-            serverQueue.songs.shift();
+            if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`);
+            else utils.log(`Finished playing all musics, no more musics in the queue`);
+            if(serverQueue.loop === false || serverQueue.skipped === true) serverQueue.songs.shift();
+            if(serverQueue.skipped === true) serverQueue.skipped = false;
             utils.play(serverQueue.songs[0]);
         })
     

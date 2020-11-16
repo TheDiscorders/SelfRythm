@@ -35,7 +35,8 @@ module.exports.run = async (client, message, args) => {
             songs: songs,
             volume: serverQueue.volume,
             playing: true,
-            loop: serverQueue.loop
+            loop: serverQueue.loop,
+            skipped: false
         };
 
         queue.set("queue", queueConstruct);

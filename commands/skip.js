@@ -19,6 +19,7 @@ module.exports.run = async (client, message, args) => {
 
     utils.log(`Skipped music : ${serverQueue.songs[0].title}`);
 
+    serverQueue.skipped = true;
     serverQueue.connection.dispatcher.end();
 
     return message.channel.send(strings.musicSkipped);

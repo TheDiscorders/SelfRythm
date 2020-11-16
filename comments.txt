@@ -1,0 +1,10 @@
+In the strings.json file you can add variables that will be raplaced by the real value in at the moments it's called:
+
+Example : If you put "The song SONG_TILE is now looped" in the loopOn string the name of the song playing will replace SONG_TITLE.
+
+List of variables depending on the string (";" is a separation between 2 variables names) :
+
+loopOn : SONG_TITLE
+loopOff : SONG_TITLE
+startedPlaying : SONG_TITLE ; url
+songAddedToQueue : SONG_TITLE ; url
