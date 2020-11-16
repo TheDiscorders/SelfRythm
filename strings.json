@@ -1,12 +1,14 @@
 {
     "permissionDenied": "❌ You don't have the permission to run this command",
     "notInVocal" : "❌ You have to be in a voice channel to do this",
-    "noArgs" : "❌ You need to provide a link or some keywords",
+    "noArgsSongSearch" : "❌ You need to provide a link or some keywords",
     "nothingPlaying": "❌ There is nothing playing",
     "noSongsQueued": "❌ No songs queued",
     "cantLoop": "❌ You need to have a song playing to loop it",
     "badUrl": "❌ Invalid link provided",
     "errorJoin": "❌ A music needs to be playing for the bot to change channels",
+    "noVolume": "❌ You need to provide a value for the volume",
+    "toMuchArgsVolume": "❌ They are too many arguments, please provide a single number",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing\n<url>",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue\n<url>",
     "musicStopped": "✅ Music stopped",
@@ -14,5 +16,6 @@
     "loopOn": "✅ Looping **SONG_TITLE**",
     "loopOff": "✅ Stopped looping **SONG_TITLE**",
     "joinMsg": "✅ Joinned succesfully the voice channel",
+    "volumeChanged": "✅ The volume was successfully seted to VOLUME",
     "musicsQueued": ":musical_note: **Musics queued** :musical_note: :"
 }

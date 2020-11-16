@@ -11,15 +11,15 @@ module.exports.run = async (client, message, args) => {
 
     const serverQueue = queue.get("queue");
 
-    if(!serverQueue){return message.channel.send(strings.noSongsQueued)}
+    if(!serverQueue){return message.channel.send(strings.noSongsQueued);};
 
     queuetxt = "";
     
     for(let i=0;i<serverQueue.songs.length;i++){
         var minutes = `${Math.floor(serverQueue.songs[i].duration / 60)}`;
-        if(minutes.length === 1) minutes = "0" + minutes
+        if(minutes.length === 1) minutes = "0" + minutes;
         var seconds = `${serverQueue.songs[i].duration % 60}`;
-        if(seconds.length === 1) seconds = "0" + seconds
+        if(seconds.length === 1) seconds = "0" + seconds;
 
         if(serverQueue.loop === true && i===0) { 
             queuetxt += `\`\`${i+1}. (${minutes}:${seconds}) 🔄 ${serverQueue.songs[i].title} requested by ${serverQueue.songs[i].requestedby}\`\`\n`;
@@ -28,7 +28,7 @@ module.exports.run = async (client, message, args) => {
         }
     };
 
-    utils.log("Showed music queue")
+    utils.log("Showed music queue");
     return message.channel.send(strings.musicsQueued + "\n" + queuetxt);
 }
 

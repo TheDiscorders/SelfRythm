@@ -15,7 +15,7 @@ module.exports.run = async (client, message, args) => {
     serverQueue.songs = [];
 
 
-    utils.log("Stopped playing music")
+    utils.log("Stopped playing music");
 
     serverQueue.connection.dispatcher.end();
 

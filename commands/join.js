@@ -1,5 +1,3 @@
-const ytdl = require("ytdl-core");
-
 const strings = require("../strings.json");
 const utils = require("../utils");
 
@@ -22,35 +20,25 @@ module.exports.run = async (client, message, args) => {
 
     if(serverQueue.voiceChannel.guild.id != voiceChannel.guild.id){utils.play(serverQueue.songs[0])
 
-        const url = serverQueue.songs[0].url
-        await serverQueue.connection.dispatcher.end();
+        songs = [];
 
-        /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
-        const songInfo = await ytdl.getBasicInfo(url);
-
-        /* Puts in an object from the song title, duration in seconds, url and he person who requsted the song */
-        const song = {
-            title: songInfo.videoDetails.title,
-            duration: songInfo.videoDetails.lengthSeconds,
-            url: FUrl,
-            requestedby: message.author.tag
+        for(i=0;i<serverQueue.songs.length;i++){
+            songs.push(serverQueue.songs[0]);
         };
+
+        await serverQueue.connection.dispatcher.end();
 
         const queueConstruct = {
             textchannel: message.channel,
             voiceChannel: voiceChannel,
             connection: null,
-            songs: [],
+            songs: songs,
             volume: 5,
             playing: true,
-            loop: false
+            loop: serverQueue.loop
         };
 
-        /* Adds a queue filed with custom data with the 'queueConstruct' format to the global Map 'queue' defined in index.js */
         queue.set("queue", queueConstruct);
-
-        /* Push the a song object (defined by 'const song =') filled with custom data into the list of songs in the queue added 2 lines above */
-        queueConstruct.songs.push(song);
 
         queueConstruct.connection = await voiceChannel.join();
 
@@ -61,7 +49,7 @@ module.exports.run = async (client, message, args) => {
     }
 
 
-    return message.channel.send(strings.joinMsg)
+    return message.channel.send(strings.joinMsg);
 
 }
 

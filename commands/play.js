@@ -18,7 +18,7 @@ const utils = require("../utils");
 module.exports.run = async (client, message, args) => {
 
     /* Returns the message 'strings.noLink' defined in 'strings.json' in the channel where the command came from*/
-    if(!args[0]) return message.channel.send(strings.noArgs);
+    if(!args[0]) return message.channel.send(strings.noArgsSongSearch);
 
     utils.log("Looking for music details...")
 
