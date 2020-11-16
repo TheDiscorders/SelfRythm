@@ -9,7 +9,6 @@ utils.log("Logging in...")
 
 global.queue = new Map();
 
-
 client.commands = new Enmap();
 
 var loaded = {

@@ -1,5 +1,6 @@
 const AsciiTable = require("ascii-table/ascii-table");
 const YouTube = require("youtube-sr");
+const ytdl = require("ytdl-core");
 
 module.exports = {
 
@@ -48,7 +49,7 @@ module.exports = {
      * @param {Object} loaded 
      */
     showTable: function(loaded){
-        var table = new AsciiTable('Loaded content')
+        var table = new AsciiTable('Loading content...')
         table.setHeading("Commands","Events")
         for(let i=0; i<=Math.max(loaded.commands.length, loaded.events.length)-1; i++){
             table.addRow(loaded.commands[i], loaded.events[i])
@@ -68,6 +69,57 @@ module.exports = {
         let link = await lookingOnYtb;
         return link;
 
+    },
+    play: function(song) {
+
+        const utils = require("./utils");
+
+        /* Gets the map 'queue' defined in index.js and gets the branch managing the concerned guild */
+        const serverQueue = queue.get("queue");
+    
+        /* Make the bot leave the channel if no songs are played, then delete the branch the branch managing the concerned guild */
+        if(!song){
+            utils.log("No songs left in queue")
+            serverQueue.voiceChannel.leave();
+            return queue.delete("queue");
+        }
+    
+        utils.log(`Started playing the music : ${song.title}`)
+    
+        /* 
+            Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[]
+            Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs 
+        */
+    
+        const dispatcher = serverQueue.connection.play(ytdl(song.url, {
+            filter: 'audioonly',
+            quality: 'highestaudio',
+            highWaterMark: 1 << 25
+        }));
+    
+        dispatcher.on('finish', () => {
+    
+            if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
+            else utils.log(`Finished playing the music, no more musics in the queue`)
+    
+            /* Clear the first of element of songs if loop is equal to 'off' */
+            if(serverQueue.loop === false) serverQueue.songs.shift();
+    
+            /* Plays the first element of songs */
+            utils.play(serverQueue.songs[0]);
+    
+        })
+    
+        dispatcher.on('error', error => {
+    
+            /* Logs errors with the log function from utils that add the date, hour, minute and second of the log */
+            console.log(error)
+    
+        });
+        
+        /* Set default volume serverQueue.volume defined in queueConstruct */
+        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+    
     }
     
 }
