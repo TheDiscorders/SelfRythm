@@ -20,5 +20,6 @@
     "loopOff": ":repeat_one: **Disabled !**",
     "joinMsg": "✅ Joinned succesfully the voice channel",
     "volumeChanged": "✅ The volume was successfully set to VOLUME",
-    "musicsQueued": ":musical_note: **Musics queued** :musical_note: :"
+    "musicsQueued": ":musical_note: **Musics queued** :musical_note: :",
+    "earrapeWarning": "⚠ Are you sure ? It can severely damage the hearing of all people in the channel !\nTo continue:\n1)Change your custom status to \"yes\"\n2) Press the ✅ reaction"
 }
