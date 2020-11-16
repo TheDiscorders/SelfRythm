@@ -2,8 +2,10 @@ const strings = require("../strings.json");
 
 module.exports.run = async (client, message, args) => {
 
-    if(args.length == 0) return message.channel.send(strings.noVolume);
     if(args.length > 1) return message.channel.send(strings.toMuchArgsVolume);
+    if(args.length === 0) return message.channel.send(strings.noVolume);
+    if(!Number.isInteger(args[0])) return message.channel.send(strings.notNumber);
+    if(args[0] > 10) return message.channel.send(strings.volumeToHigh);
     if(!message.member.voice.channel) return message.channel.send(strings.notInVocal);
 
     const serverQueue = queue.get("queue");
