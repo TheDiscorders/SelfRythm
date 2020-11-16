@@ -35,13 +35,13 @@ module.exports = {
      */
     isURL: function (url) {
         if(!url) return false;
-        var pattern = new RegExp('^(https?:\\/\\/)?'+ // protocol
-            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+ // domain name
-            '((\\d{1,3}\\.){3}\\d{1,3}))|' + // OR ip (v4) address
-            'localhost' + // OR localhost
-            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+ // port and path
-            '(\\?[;&a-z\\d%_.~+=-]*)?'+ // query string
-            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        var pattern = new RegExp('^(https?:\\/\\/)?'+
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|'+
+            '((\\d{1,3}\\.){3}\\d{1,3}))|' +
+            'localhost' +
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*'+
+            '(\\?[;&a-z\\d%_.~+=-]*)?'+
+            '(\\#[-a-z\\d_]*)?$', 'i');
         return pattern.test(url);
     },
     /**
@@ -68,16 +68,12 @@ module.exports = {
 
         let link = await lookingOnYtb;
         return link;
-
     },
     play: function(song) {
 
         const utils = require("./utils");
-
-        /* Gets the map 'queue' defined in index.js and gets the branch managing the concerned guild */
         const serverQueue = queue.get("queue");
-    
-        /* Make the bot leave the channel if no songs are played, then delete the branch the branch managing the concerned guild */
+
         if(!song){
             utils.log("No songs left in queue")
             serverQueue.voiceChannel.leave();
@@ -86,11 +82,6 @@ module.exports = {
     
         utils.log(`Started playing the music : ${song.title}`)
     
-        /* 
-            Uses ytdl-core module to play the song.url corresponding to the first song of the list songs[]
-            Options filter, quality and highWaterMark are here for a better optimisation and to fix some bugs 
-        */
-    
         const dispatcher = serverQueue.connection.play(ytdl(song.url, {
             filter: 'audioonly',
             quality: 'highestaudio',
@@ -98,28 +89,17 @@ module.exports = {
         }));
     
         dispatcher.on('finish', () => {
-    
             if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`)
             else utils.log(`Finished playing the music, no more musics in the queue`)
-    
-            /* Clear the first of element of songs if loop is equal to 'off' */
-            if(serverQueue.loop === false) serverQueue.songs.shift();
-    
-            /* Plays the first element of songs */
+            serverQueue.songs.shift();
             utils.play(serverQueue.songs[0]);
-    
         })
     
         dispatcher.on('error', error => {
-    
-            /* Logs errors with the log function from utils that add the date, hour, minute and second of the log */
             console.log(error)
-    
         });
-        
-        /* Set default volume serverQueue.volume defined in queueConstruct */
+
         dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-    
     }
     
 }

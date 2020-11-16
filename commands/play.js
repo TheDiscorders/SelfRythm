@@ -1,7 +1,5 @@
-/* Import modules */
 const ytdl = require("ytdl-core");
 
-/* Import files */
 const strings = require("../strings.json");
 const utils = require("../utils");
 
@@ -14,40 +12,22 @@ const utils = require("../utils");
  */
 
 
-/* Get the parameters 'client, message, args' from the message.js file handling the message event */
 module.exports.run = async (client, message, args) => {
 
-    /* Returns the message 'strings.noLink' defined in 'strings.json' in the channel where the command came from*/
     if(!args[0]) return message.channel.send(strings.noArgsSongSearch);
 
     utils.log("Looking for music details...")
 
-    /* Check if the argument provided is an URL with the function 'isURL' defined in 'utils.js' */
     if(utils.isURL(args[0])){
-
-        /* If it is an URL put the variable FUrl (Final Url) to the first argument so the url */
         FUrl = args[0];
-
     } else {
-
-        /* 
-            If it isn't an URL put the variable FUrl to the Url returned by the function 'getUrl' defined in 'utils.js'
-            that gets the url of the first youtube video found by the keywords provided in the args 
-        */
         FUrl = await utils.getUrl(args)
-
     };
 
-    /* Creates a variable containing the voice channel that the member who used the command is in */
     let voiceChannel = message.member.voice.channel; 
-
-    /* Gets the branch of the Map 'queue' defined in 'index.js' corresponding the the discord server where the command has been used */
     const serverQueue = queue.get("queue");
-
-    /* Get the songInfo (url, channel, song duration and more). We only focus on the audio for a faster process. */
     const songInfo = await ytdl.getBasicInfo(FUrl);
 
-    /* Puts in an object from the song title, duration in seconds, url and he person who requsted the song */
     const song = {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
@@ -57,10 +37,8 @@ module.exports.run = async (client, message, args) => {
 
     utils.log("Got music details, preparing the music to be played...")
 
-    /* Check if the server music queue doesn't exist */
     if(!serverQueue) {
 
-        /* Creates a model for constructing a queue */
         const queueConstruct = {
             textchannel: message.channel,
             voiceChannel: voiceChannel,
@@ -71,54 +49,27 @@ module.exports.run = async (client, message, args) => {
             loop: false
         };
 
-        /* Adds a queue filed with custom data with the 'queueConstruct' format to the global Map 'queue' defined in index.js */
         queue.set("queue", queueConstruct);
-
-        /* Push the a song object (defined by 'const song =') filled with custom data into the list of songs in the queue added 2 lines above */
         queueConstruct.songs.push(song);
 
-        /* Checks if the user is in a voice channel */
         if (voiceChannel != null) { 
 
-            /* 
-                Send the message 'startedPlaying' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.startedPlaying', by the  real song title 
-                present in the song object. Does the same with 'url' and the url defined in the song object. It sends it in the channel where the command has been used.
-            */
             message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title).replace("url", song.url));
 
-            /* Create the connection variable that contains the voice channel */
             var connection = await voiceChannel.join();
-
-            /* Adds to the 'queueConstruct' defined earlier the 'connection' variable defined 2 lines above */
             queueConstruct.connection = connection;
 
-            /* 
-                Starts the 'play' function defined earlier with the specified parameters : the guild and the first song of the list of songs 
-                in 'queueConstruct' (the queue model) that is located at queue.get(message.guild.id).
-            
-                The model is added earlier into the map then it's customized with custom data, being in a specific location it doesn't impact the model for the following songs.
-            */
             utils.play(queueConstruct.songs[0]);
 
         } else {
-
-            /* If no queue exists, deletes the branch of the implicated guild in the Map 'queue' defined in 'index.js' */
             queue.delete("queue");
-
-            /* Then send the message 'notInVocal' defined in 'strings.json' in the channel where the message has been sent */
             return message.channel.send(strings.notInVocal);
         };
     } else {
 
-        /* If the server music queue already exist just adds the new song object defined earlier at the end of the 'songs' list in the 'serverQueue' object located in the Map 'queue' */
         serverQueue.songs.push(song);
-
         utils.log(`Added music to the queue : ${song.title}`)
 
-        /* 
-            Send the message 'songAddedToQueue' defined in 'strings.json' and replace 'SONG_TITLE', present in 'strings.songAddedToQueue', by the  real song title 
-            present in the song object. Does the same with 'url' and the url defined in the song object. It sends it in the channel where the command has been used.
-        */
         return message.channel.send(strings.songAddedToQueue.replace("SONG_TITLE", song.title).replace("url", song.url));
     };
 
