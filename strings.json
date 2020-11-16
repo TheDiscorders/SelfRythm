@@ -8,6 +8,7 @@
     "badUrl": "❌ Invalid link provided",
     "errorJoin": "❌ A music needs to be playing for the bot to change channels",
     "noVolume": "❌ You need to provide a value for the volume",
+    "nothingPlayingVolume": "❌ You need to have a song playing to change the volume",
     "toMuchArgsVolume": "❌ They are too many arguments, please provide a single number",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing\n<url>",
     "songAddedToQueue": "✅ '**SONG_TITLE**' has been added to the queue\n<url>",

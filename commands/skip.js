@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
     const serverQueue = queue.get("queue");
     if(!serverQueue){return message.channel.send(strings.nothingPlaying);};
 
-    utils.log(`Skipped music : ${serverQueue.songs[0].title}`)
+    utils.log(`Skipped music : ${serverQueue.songs[0].title}`);
 
     serverQueue.connection.dispatcher.end();
 
