@@ -2,8 +2,9 @@ const strings = require("../strings.json");
 
 module.exports.run = async (client, message, args) => {
 
-    if(!args) {return message.channel.send(strings.noVolume);};
+    if(args.length == 0) {return message.channel.send(strings.noVolume);};
     if(args.length > 1) {return message.channel.send(strings.toMuchArgsVolume);};
+    if(!message.member.voice.channel) {return message.channel.send(strings.notInVocal);};
 
     message.channel.send(strings.volumeChanged.replace("VOLUME", args[0]));
     
