@@ -13,7 +13,7 @@ module.exports.run = async (client, message, args) => {
     const serverQueue = queue.get("queue");
     
     if(!voiceChannel){return message.channel.send(strings.notInVocal)};
-    if(!serverQueue){return message.channel.send(strings.cantLoop)};
+    if(!serverQueue){return message.channel.send(strings.errorJoin)};
 
     utils.log(`Joined the channel : ${voiceChannel.name}`);
 
