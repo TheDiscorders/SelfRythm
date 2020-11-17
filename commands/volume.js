@@ -27,12 +27,13 @@ module.exports.run = async (client, message, args) => {
             const collector = warning.createReactionCollector(filter, { max: 1, time: 8000 });
        
             collector.on('collect', () => {
-                const oldVolume = serverQueue.volume;
+                oldVolume = serverQueue.volume;
                 serverQueue.volume = 100;
                 serverQueue.connection.dispatcher.setVolumeLogarithmic(100 / 5);
                 message.channel.send(strings.startEarrape);
                 setTimeout(function(){
                     message.channel.send(strings.endEarrape.replace("VOLUME", oldVolume));
+                    serverQueue.volume = oldVolume;
                     return serverQueue.connection.dispatcher.setVolumeLogarithmic(oldVolume / 5);
                 }, 7000);
             });
