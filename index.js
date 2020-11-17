@@ -4,17 +4,19 @@ const fs = require('fs');
 const Enmap = require('enmap');
 const config = require(`./config`)
 const utils = require('./utils')
+client.login(config.token)
 
-utils.log("Logging in...")
+utils.log("Logging in...");
+
+/* ----------------------------------------------- */
 
 global.queue = new Map();
-
 client.commands = new Enmap();
 
-var loaded = {
-  events: [],
-  commands: []
-}
+/* ----------------------------------------------- */
+
+var loaded = {events: [], commands: []};
+
 var promise = new Promise((resolve) => {
   fs.readdir('./events/', (err, files) => {
     if (err) return console.error;
@@ -26,8 +28,8 @@ var promise = new Promise((resolve) => {
       client.on(evtName, evt.bind(null, client));
     });
     resolve();
-  })
-})
+  });
+});
 
 
 fs.readdir('./commands/', async (err, files) => {
@@ -45,4 +47,4 @@ fs.readdir('./commands/', async (err, files) => {
 });
 
 
-client.login(config.token)
+/* ----------------------------------------------- */
