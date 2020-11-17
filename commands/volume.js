@@ -1,4 +1,5 @@
 const strings = require("../strings.json");
+const utils = require("../utils");
 
 module.exports.run = async (client, message, args) => {
 
@@ -9,13 +10,13 @@ module.exports.run = async (client, message, args) => {
     if(args.length > 1) return message.channel.send(strings.toMuchArgsVolume);
     if(args.length === 0) return message.channel.send(strings.noVolume);
 
-    intArg = parseInt(args[0]);
+    intArg = parseInt(args[0]); floatArg = parseFloat(args[0]);
 
-    if(!Number.isInteger(intArg) && args!="earrape") return message.channel.send(strings.noNumber);
+    if(!Number.isInteger(intArg) && utils.isFloat(floatArg) && args != "earrape") return message.channel.send(strings.noNumber);
 
     if (args[0] === "earrape"){
 
-        message.channel.send(strings.earrapeWarning)
+        message.channel.send(strings.earrapeWarning);
         .then(async function (warning) {
 
             await warning.react('✅');

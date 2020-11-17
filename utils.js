@@ -8,6 +8,9 @@ module.exports = {
      * @description Sends logs to console and adds the date/time
      * @param content The content to log
      */
+    isFloat: function(n) {
+        return ((typeof n==='number')&&(n%1!==0));
+    },
     log: function(content) {
         date_ob = new Date();
       
