@@ -16,7 +16,7 @@ module.exports.run = async (client, message, args) => {
 
     if (args[0] === "earrape"){
 
-        message.channel.send(strings.earrapeWarning);
+        message.channel.send(strings.earrapeWarning)
         .then(async function (warning) {
 
             await warning.react('✅');
