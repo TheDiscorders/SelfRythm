@@ -10,9 +10,9 @@ module.exports.run = async (client, message, args) => {
     if(args.length > 1) return message.channel.send(strings.toMuchArgsVolume);
     if(args.length === 0) return message.channel.send(strings.noVolume);
 
-    intArg = parseInt(args[0]); floatArg = parseFloat(args[0]);
+    floatVolume = parseFloat(args);
 
-    if(!Number.isInteger(intArg) && utils.isFloat(floatArg) && args != "earrape") return message.channel.send(strings.noNumber);
+    if(!Number.isInteger(parseInt(args)) && utils.isFloat(floatVolume) && args != "earrape") return message.channel.send(strings.noNumber);
 
     if (args[0] === "earrape"){
 
@@ -49,8 +49,9 @@ module.exports.run = async (client, message, args) => {
         if(args[0] > 10) return message.channel.send(strings.volumeToHigh);
         if(!message.member.voice.channel) return message.channel.send(strings.notInVocal);
         message.channel.send(strings.volumeChanged.replace("VOLUME", args[0]));
-        serverQueue.volume = intArg;
-        return serverQueue.connection.dispatcher.setVolumeLogarithmic(intArg / 5);
+    
+        serverQueue.volume = floatVolume;
+        return serverQueue.connection.dispatcher.setVolumeLogarithmic(floatVolume / 5);
 
     };
 };
