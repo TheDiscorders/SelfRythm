@@ -23,7 +23,7 @@
     "enmap": "^5.8.2",
     "ffmpeg": "0.0.4",
     "opusscript": "0.0.7",
-    "youtube-sr": "^1.0.7",
+    "youtube-sr": "^3.0.3",
     "ytdl-core": "^4.0.3"
   }
 }
