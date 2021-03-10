@@ -31,7 +31,7 @@ This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's
 
 ## 👌 Usage
 
-Start the bot by doing **`npm start	`** in a terminal in the folder.
+Start the bot by doing **`npm start`** in a terminal in the folder.
 
 * Commands :
 
