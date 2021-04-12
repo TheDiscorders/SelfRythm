@@ -1,5 +1,5 @@
 const AsciiTable = require("ascii-table/ascii-table");
-const YouTube = require("youtube-sr");
+const YouTube = require("youtube-sr").default;
 const ytdl = require("ytdl-core");
 
 module.exports = {
@@ -57,7 +57,6 @@ module.exports = {
     },
     getUrl: async function (words){
         stringOfWords = words.join(" ");
-
         lookingOnYtb = new Promise(async (resolve) => {
             YouTube.search(stringOfWords, { limit: 1 })
                 .then(result => {
