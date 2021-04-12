@@ -16,7 +16,7 @@ Create a Discord account and get the token
 Then, you can run the command  
 ```sh
 docker run -d \
--name "SelfRythm" \ # Optionnal, you can change it
+--name "SelfRythm" \ # Optionnal, you can change it
 -e "TOKEN=Your Discord Token" \ #Required
 -e "PREFIX=A Prefix" \ #Optionnal, default is $
 -e "ALLOWED=[IDS]" \ #Optionnal, list of Discord IDs allowed to use bot commands, everyone can use if not provided
