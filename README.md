@@ -20,7 +20,7 @@ docker run -d \
 -e "TOKEN=Your Discord Token" \ #Required
 -e "PREFIX=A Prefix" \ #Optionnal, default is $
 -e "ALLOWED=[IDS]" \ #Optionnal, list of Discord IDs allowed to use bot commands, everyone can use if not provided
-firokat/selfrythm
+thediscorders/selfrythm
 ```
 
 ## ⛓ Manual installation
