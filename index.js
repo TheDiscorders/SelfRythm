@@ -7,6 +7,7 @@ const utils = require('./utils');
 if (!process.env.TOKEN){
   try{
     const config = require("./config");
+    global.config = {'token': config.token, 'prefix': config.prefix};
   } catch (e){
     console.error("No config file found, create it or use environnement variables.");
     process.exit(1);
