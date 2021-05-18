@@ -7,17 +7,26 @@
 We created that for fun, we don't encourage you to use selfbots to create trouble on public servers and we won't do so.
 ## What is this shit ?
 
-This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's made to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot, this mean it can be used with a user account. This has many advantages, for example you can use it on any servs you're in, even without permissions.
+This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's made to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot, this mean it can be used with a user account. This has many advantages, for example you can use it on any servers you're in, even without permissions.
 
-## ⛓ Configuration
+## ⛓ Docker installation
+
+You can use SelfRythm as a Docker container. To do so, you need to install Docker on your machine.
+Create a Discord account and get the token
+Then, you can run the command  
+```sh
+docker run -d \
+--name "SelfRythm" \ # Optionnal, you can change it
+-e "TOKEN=Your Discord Token" \ #Required
+-e "PREFIX=A Prefix" \ #Optionnal, default is $
+-e "ALLOWED=[IDS]" \ #Optionnal, list of Discord IDs allowed to use bot commands, everyone can use if not provided
+thediscorders/selfrythm
+```
+
+## ⛓ Manual installation
 1) Create a Discord account and get the token
 2) Clone the repository and navigate in the folder
 3) Install all the modules with `npm i`
-- Installed modules
-    * **[discord.js-selfbot](https://www.npmjs.com/package/discord.js-selfbot)**
-    * **[enmap](https://www.npmjs.com/package/enmap)**
-    * **[ytdl-core](https://www.npmjs.com/package/ytdl-core)**
-    * **[ascii-table](https://www.npmjs.com/package/ascii-table)**
 4) Configure the bot with your personnal creditentials
 * Values to provide: 
   * In the `config.js` file

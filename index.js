@@ -2,8 +2,28 @@ const Discord = require("discord.js-selfbot");
 const client = new Discord.Client();
 const fs = require('fs');
 const Enmap = require('enmap');
-const config = require(`./config`)
-const utils = require('./utils')
+const utils = require('./utils');
+
+if (!process.env.TOKEN){
+  try{
+    const config = require("./config");
+    global.config = {'token': config.token, 'prefix': config.prefix};
+  } catch (e){
+    console.error("No config file found, create it or use environnement variables.");
+    process.exit(1);
+  };
+} else{
+  if (!process.env.PREFIX) process.env.PREFIX="$";
+  global.config = {'token': process.env.TOKEN, 'prefix': process.env.PREFIX};
+}
+if (!process.env.ALLOWED){
+  try {global.config.allowed=require("./allowed.json").allowed}
+  catch (e){
+    global.config.allowed=[]
+  }
+} else{
+  global.config.allowed=process.env.ALLOWED
+}
 client.login(config.token)
 
 utils.log("Logging in...");
