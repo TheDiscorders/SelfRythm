@@ -197,7 +197,7 @@ detect-libc@^1.0.3:
   resolved "https://registry.yarnpkg.com/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
   integrity sha1-+hN8S9aY7fVc1c0CrFWfkaTEups=
 
-discord.js-selfbot@12.0.2:
+discord.js-selfbot@^12.0.2:
   version "12.0.2"
   resolved "https://registry.yarnpkg.com/discord.js-selfbot/-/discord.js-selfbot-12.0.2.tgz#8fced5ec8fafb268d1dea197e9cf6e924c414b89"
   integrity sha512-JMuocq5T4mmIjI+cWtWCURK2a4Q1OwugW9A443J99D3PEtbNdS5CB89dZEQtyna33wudqvyuvXNDy+veyY343w==
@@ -811,19 +811,19 @@ wrappy@1:
   integrity sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=
 
 ws@^7.2.1:
-  version "7.4.4"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.4.tgz#383bc9742cb202292c9077ceab6f6047b17f2d59"
-  integrity sha512-Qm8k8ojNQIMx7S+Zp8u/uHOx7Qazv3Yv4q68MiWWWOJhiwG5W3x7iqmRtJo8xxrciZUY4vRxUTJCKuRnF28ZZw==
+  version "7.4.6"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.4.6.tgz#5654ca8ecdeee47c33a9a4bf6d28e2be2980377c"
+  integrity sha512-YmhHDO4MzaDLB+M9ym/mDA5z0naX8j7SIlT8f8z+I0VtzsRbekxEutHSme7NPS2qE8StCYQNUnfWdXta/Yu85A==
 
 yallist@^4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-youtube-sr@^3.0.4:
-  version "3.0.5"
-  resolved "https://registry.yarnpkg.com/youtube-sr/-/youtube-sr-3.0.5.tgz#ce01309b79a24ca0ef83585129b192a2021ef6a2"
-  integrity sha512-vcoPPQWIZqp0UHxeI1TTrv6xl2rUaR5hfjl51OjlvH5g3CGNg2ckfsx9GyDasryKOmPdzk8IGCGJgM66vlvAVw==
+youtube-sr@^4.0.3:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/youtube-sr/-/youtube-sr-4.1.1.tgz#e8fec9d2e0b430910bdedb77667a8dd54250cf4f"
+  integrity sha512-5MluT51vQG39BaL6oKIEBoVkeA2y0aAbRoktbrH/b0y2s2hyhXnbTlR99JIvlSHd9I3sQxLQ2MWxwTjW9yK9xw==
   dependencies:
     node-fetch "^2.6.1"
 
