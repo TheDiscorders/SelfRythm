@@ -1,5 +1,6 @@
 const strings = require('../strings.json');
 const utils = require('../utils');
+const embeds = require('../embeds.js');
 const queue = require('../queue.js');
 
 /**
@@ -11,9 +12,8 @@ const queue = require('../queue.js');
  */
 module.exports.run = async (client, message, args) => {
     const serverQueue = queue.queueManager.get(message.guild.id);
-
-    if (!serverQueue)
-        return message.channel.send(strings.noSongsQueued);
+    if (!serverQueue || serverQueue.length === 0)
+        return message.channel.send(embeds.songQueueEmpty());
 
     let queuetxt = '';
 
@@ -36,6 +36,8 @@ module.exports.run = async (client, message, args) => {
 };
 
 
-module.exports.names = {
-    list: ['queue', 'q']
+module.exports.names = ['queue', 'q'];
+module.exports.help = {
+    desc: 'View the current song queue',
+    syntax: ''
 };

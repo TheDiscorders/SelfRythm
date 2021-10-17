@@ -1,8 +1,22 @@
 const ytdl = require('ytdl-core');
 
-const strings = require('../strings.json');
 const utils = require('../utils');
 const queue = require('../queue.js');
+const embeds = require('../embeds.js');
+
+/**
+ * Send an embed for a song ("Now playing")
+ * @param {Message} message Message of the command
+ * @param {object} song Song obj
+ * @return {*}
+ */
+function sendSongEmbed(message, song) {
+    const songEmbed = embeds.defaultEmbed()
+        .setTitle('Added to queue')
+        .setDescription(`[${song.title}](${song.url}) [${message.author.toString()}]`)
+        .setURL(song.url);
+    return message.channel.send(songEmbed);
+}
 
 /**
  * @description Play a song with the provided link
@@ -13,22 +27,15 @@ const queue = require('../queue.js');
  */
 module.exports.run = async (client, message, args) => {
     if (!args[0])
-        return message.channel.send(strings.noArgsSongSearch);
+        throw new utils.FlagHelpError();
 
     utils.log('Looking for music details...');
 
-    let FUrl;
-
-    if (utils.isURL(args[0]))
-        FUrl = args[0];
-    else
-        FUrl = await utils.getUrl(args);
-
+    let FUrl = utils.isURL(args[0]) ? args[0] : await utils.getUrl(args);
     let voiceChannel = message.member.voice.channel;
-
     let serverQueue = queue.queueManager.get(message.guild.id);
-    const songInfo = await ytdl.getBasicInfo(FUrl);
 
+    const songInfo = await ytdl.getBasicInfo(FUrl);
     const song = {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
@@ -38,29 +45,32 @@ module.exports.run = async (client, message, args) => {
 
     utils.log('Got music details, preparing the music to be played...');
 
-    if (!serverQueue) {
+    if (!serverQueue || serverQueue.songs.length === 0) {
         if (voiceChannel === null) {
             queue.queueManager.delete(message.guild.id);
-            return message.channel.send(strings.notInVocal);
+            return message.channel.send(embeds.notInVoiceChannelEmbed());
         }
 
         serverQueue = new queue.ServerQueue(message, voiceChannel);
         serverQueue = queue.queueManager.add(serverQueue);
         serverQueue.songs.push(song);
 
-        message.channel.send(strings.startedPlaying.replace('SONG_TITLE', song.title).replace('url', song.url));
-
         let connection = await voiceChannel.join();
         serverQueue.connection = connection;
-        serverQueue.dispatcher = utils.play(serverQueue.songs[0], serverQueue);
+        serverQueue.play();
     } else {
+        if (voiceChannel === null)
+            return message.channel.send(embeds.notInVoiceChannelEmbed());
+
         serverQueue.songs.push(song);
         utils.log(`Added music to the queue : ${song.title}`);
-
-        return message.channel.send(strings.songAddedToQueue.replace('SONG_TITLE', song.title).replace('url', song.url));
     }
+
+    return sendSongEmbed(message, song);
 };
 
-module.exports.names = {
-    list: ['play', 'p']
+module.exports.names = ['play', 'p'];
+module.exports.help = {
+    desc: 'Add a song to the queue',
+    syntax: '<youtube url | playlist | search query>'
 };

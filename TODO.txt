@@ -4,31 +4,45 @@ whitelist servers
 
 remind command
 
+check if url is valid
+youtube 403 detection
 errors if no search result on youtube
 use opus stream 
 
+dont leave on queue end
+
+now playing when song starts playing
+
+permissions aint workin
+
+better queue implementation:tm: 
+
+warn if no perms to view voice channel
+
+leave after inactivity - if config
+
+colored terminal log
+
+load playlists
+
+reload 
+
+automated tests (check for all params, help text, etc...)
 
 locla file support / other sources 
 - oundcloud, bandcamp, http urls
 
-send help text if not vlaid parameter
-- unify sending embed format
+don't hard code strings anymore
 
 !!np / no playing
 
-!!die / !!fuckoff / !!lleave
-
 !!help maybe
-
-format embeds for sned
 
 database somewhere
 
 - reformat the js code
 - loop should loop track or queue too
-   - /loop track
-   - /loop queue
-   - /loop off
+
 - /clear - clear the queue
 - /jump index 
 - /lyrics - find lyrics for track?

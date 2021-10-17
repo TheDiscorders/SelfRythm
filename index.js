@@ -59,7 +59,7 @@ fs.readdir('./src/commands/', async (err, files) => {
     files.forEach(file => {
         if (!file.endsWith('.js')) return;
         let props = require(`./src/commands/${file}`);
-        props.names.list.forEach(name => {
+        props.names.forEach(name => {
             client.commands.set(name, props);
         });
         let cmdName = file.split('.')[0];

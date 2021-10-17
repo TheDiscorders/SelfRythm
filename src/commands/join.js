@@ -1,6 +1,5 @@
-const strings = require('../strings.json');
 const utils = require('../utils');
-const queue = require('../queue.js');
+const embeds = require('../embeds.js');
 
 /**
  * @description Make the bot join the current voice channel the user is in
@@ -10,37 +9,18 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    let voiceChannel = message.member.voice.channel;
-    const serverQueue = queue.queueManager.get(message.guild.id);
-
+    const voiceChannel = message.member.voice.channel;
     if (!voiceChannel)
-        return message.channel.send(strings.notInVocal);
-    if (!serverQueue)
-        return message.channel.send(strings.errorJoin);
+        return message.channel.send(embeds.notInVoiceChannelEmbed());
 
     utils.log(`Joined the channel : ${voiceChannel.name}`);
 
-    // TODO: what does this do??
-    if (serverQueue.voiceChannel.guild.id !== voiceChannel.guild.id) {
-        utils.play(serverQueue.songs[0], serverQueue);
-
-        let songs = [];
-        for (let i = 0; i < serverQueue.songs.length; i++)
-            songs.push(serverQueue.songs[0]);
-
-        await serverQueue.connection.dispatcher.end();
-
-        let queueConstruct = new queue.ServerQueue(message, voiceChannel);
-
-        queueConstruct = queue.queueManager.add(queueConstruct);
-        queueConstruct.connection = await voiceChannel.join();
-        utils.play(queueConstruct.songs[0], serverQueue);
-    } else
-        serverQueue.connection = await voiceChannel.join();
-
-    return message.channel.send(strings.joinMsg);
+    return message.channel.send(embeds.defaultEmbed()
+        .setDescription(`Joining ${voiceChannel.toString()}`));
 };
 
-module.exports.names = {
-    list: ['join', 'j']
+module.exports.names = ['join', 'j', 'summon'];
+module.exports.help = {
+    desc: 'Summon the bot to the voice channel the user is in',
+    syntax: ''
 };

@@ -1,7 +1,12 @@
 const AsciiTable = require('ascii-table/ascii-table');
 const YouTube = require('youtube-sr').default;
-const queue = require('./queue.js');
-const ytdl = require('ytdl-core');
+
+class FlagHelpError extends Error {
+    constructor(message) {
+        super(message);
+        this.name = 'FlagHelpError';
+    }
+}
 
 module.exports = {
     /**
@@ -74,43 +79,8 @@ module.exports = {
         return link;
     },
 
-    play: function(song, serverQueue) {
-        const utils = require('./utils');
+    FlagHelpError,
 
-        if (!song) {
-            utils.log('No songs left in queue');
-            serverQueue.voiceChannel.leave();
-            return queue.delete('queue');
-        }
-
-        utils.log(`Started playing the music : ${song.title}`);
-
-        const dispatcher = serverQueue.connection.play(ytdl(song.url, {
-            filter: 'audioonly',
-            quality: 'highestaudio',
-            highWaterMark: 1 << 25
-        }));
-
-        dispatcher.on('finish', () => {
-            if (serverQueue.songs[0])
-                utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`);
-            else
-                utils.log(`Finished playing all musics, no more musics in the queue`);
-
-            // TODO: don't shift if queue loop
-            if (serverQueue.loop === 'none' || serverQueue.skipped === true)
-                serverQueue.songs.shift();
-            if (serverQueue.skipped === true)
-                serverQueue.skipped = false;
-            utils.play(serverQueue.songs[0], serverQueue);
-        });
-
-        dispatcher.on('error', error => {
-            console.log(error);
-        });
-
-        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
-
-        return dispatcher;
-    }
+    VOLUME_BASE_UNIT: 100, // what is = 100% volume, note volume command assumes this is 100 (it uses a % sign)
+    MAX_VOLUME: 200
 };

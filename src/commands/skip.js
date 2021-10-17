@@ -1,5 +1,5 @@
-const strings = require('../strings.json');
 const utils = require('../utils');
+const embeds = require('../embeds.js');
 const queue = require('../queue.js');
 
 /**
@@ -10,23 +10,24 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    let voiceChannel = message.member.voice.channel;
-
+    const voiceChannel = message.member.voice.channel;
     if (!voiceChannel)
-        return message.channel.send(strings.notInVocal);
+        return message.channel.send(embeds.notInVoiceChannelEmbed());
 
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue)
-        return message.channel.send(strings.nothingPlaying);
+    if (!serverQueue || serverQueue.songs.length === 0)
+        return message.channel.send(embeds.songQueueEmpty());
 
     utils.log(`Skipped music : ${serverQueue.songs[0].title}`);
+    serverQueue.kill();
 
-    serverQueue.skipped = true;
-    serverQueue.connection.dispatcher.end();
-
-    return message.channel.send(strings.musicSkipped);
+    return message.channel.send(embeds.defaultEmbed()
+        .setTitle('Skipping')
+        .setDescription(`${serverQueue.songs[0].title} [${message.author.toString()}]`));
 };
 
-module.exports.names = {
-    list: ['skip', 's']
+module.exports.names = ['skip', 's'];
+module.exports.help = {
+    desc: 'Skip the current song',
+    syntax: ''
 };

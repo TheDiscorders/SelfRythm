@@ -1,6 +1,8 @@
-const strings = require('../strings.json');
-const utils = require('../utils');
+const embeds = require('../embeds.js');
 const queue = require('../queue.js');
+const utils = require('../utils.js');
+
+const MAX_VOLUME = utils.MAX_VOLUME;
 
 /**
  * @description Adjust the playback volume
@@ -10,31 +12,35 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    const serverQueue = queue.queueManager.get(message.guild.id);
+    if (!message.member.voice.channel)
+        return message.channel.send(embeds.notInVoiceChannelEmbed());
 
-    if (!serverQueue) return message.channel.send(strings.nothingPlayingVolume);
+    let serverQueue = queue.queueManager.get(message.guild.id);
+    if (!serverQueue) // Create queue instance if doesn't exist
+        serverQueue = queue.queueManager.add(
+            new queue.ServerQueue(message, message.member.voice.channel));
 
     if (args.length > 1)
-        return message.channel.send(strings.toMuchArgsVolume);
+        throw new utils.FlagHelpError();
+
     if (args.length === 0)
-        return message.channel.send(strings.noVolume);
+        return message.channel.send(embeds.defaultEmbed()
+            .setDescription(`The current volume is **${serverQueue.volume}%**`));
 
-    let floatVolume = parseFloat(args);
+    let floatVolume = +args;
+    if (Number.isNaN(floatVolume) || floatVolume < 0 || floatVolume > MAX_VOLUME)
+        return message.channel.send(embeds.errorEmbed()
+            .setTitle(`Volume must be a percentage from 0 to ${MAX_VOLUME}%`));
 
-    if (!Number.isInteger(parseInt(args)) && utils.isFloat(floatVolume))
-        return message.channel.send(strings.noNumber);
-
-    if (args[0] > 10)
-        return message.channel.send(strings.volumeTooHigh);
-    if (!message.member.voice.channel)
-        return message.channel.send(strings.notInVocal);
-
-    message.channel.send(strings.volumeChanged.replace('VOLUME', args[0]));
+    message.channel.send(embeds.defaultEmbed()
+        .setDescription(`Volume set to **${floatVolume.toFixed(2)}%**`));
 
     serverQueue.volume = floatVolume;
-    return serverQueue.connection.dispatcher.setVolumeLogarithmic(floatVolume / 5);
+    return serverQueue.connection.dispatcher.setVolumeLogarithmic(floatVolume / utils.VOLUME_BASE_UNIT);
 };
 
-module.exports.names = {
-    list: ['volume', 'v']
+module.exports.names = ['volume', 'v', 'vol'];
+module.exports.help = {
+    desc: 'Set the volume of the music',
+    syntax: '<volume 0-200>'
 };

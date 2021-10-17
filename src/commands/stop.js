@@ -1,5 +1,5 @@
-const strings = require('../strings.json');
 const utils = require('../utils');
+const embeds = require('../embeds.js');
 const queue = require('../queue.js');
 
 /**
@@ -11,18 +11,17 @@ const queue = require('../queue.js');
  */
 module.exports.run = async (client, message, args) => {
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue)
-        return message.channel.send(strings.nothingPlaying);
-
-    serverQueue.songs = [];
+    if (!serverQueue || serverQueue.songs.length === 0)
+        return message.channel.send(embeds.songQueueEmpty());
 
     utils.log('Stopped playing music');
+    serverQueue.clear();
 
-    serverQueue.connection.dispatcher.end();
-
-    return message.channel.send(strings.musicStopped);
+    return message.channel.send(embeds.defaultEmbed().setDescription(':wave:'));
 };
 
-module.exports.names = {
-    list: ['stop', 'st']
+module.exports.names = ['stop', 'st', 'die', 'fuckoff', 'leave'];
+module.exports.help = {
+    desc: 'Disconnect the bot',
+    syntax: ''
 };
