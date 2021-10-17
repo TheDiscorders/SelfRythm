@@ -1,4 +1,4 @@
-In the strings.json file you can add variables that will be raplaced by the real value in at the moments it's called:
+In the strings.json file you can add variables that will be replaced by the real value in at the moments it's called:
 
 Example : If you put "The song SONG_TILE is now looped" in the loopOn string the name of the song playing will replace SONG_TITLE.
 

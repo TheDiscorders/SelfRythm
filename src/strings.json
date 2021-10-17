@@ -10,7 +10,7 @@
     "noVolume": "❌ You need to provide a value for the volume",
     "nothingPlayingVolume": "❌ You need to have a song playing to change the volume",
     "toMuchArgsVolume": "❌ They are too many arguments, please provide a single number",
-    "volumeToHigh": "❌ Volume can't be above 10",
+    "volumeTooHigh": "❌ Volume can't be above 10",
     "noNumber": "❌ You need to provide number (1 being 100% about the right volume)",
     "earrapeFail": "❌ Conditions not completed in 8sec, earrape mod canceled",
     "startedPlaying": "✅ '**SONG_TITLE**' started playing\n<url>",

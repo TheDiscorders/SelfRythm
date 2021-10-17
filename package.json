@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/TheDiscorders/SelfRythm.git"
   },
-  "author": "The Discorders",
+  "author": "Hellomouse",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/TheDiscorders/SelfRythm/issues"
@@ -25,5 +25,11 @@
     "opusscript": "0.0.7",
     "youtube-sr": "^4.0.3",
     "ytdl-core": "^4.0.3"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.15.8",
+    "@hellomouse/eslint-config": "^1.1.5",
+    "eslint": "^8.0.0",
+    "eslint-plugin-jsdoc": "^36.1.1"
   }
 }

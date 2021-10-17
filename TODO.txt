@@ -1,0 +1,58 @@
+example format again
+
+whitelist servers
+
+remind command
+
+errors if no search result on youtube
+use opus stream 
+
+
+locla file support / other sources 
+- oundcloud, bandcamp, http urls
+
+send help text if not vlaid parameter
+- unify sending embed format
+
+!!np / no playing
+
+!!die / !!fuckoff / !!lleave
+
+!!help maybe
+
+format embeds for sned
+
+database somewhere
+
+- reformat the js code
+- loop should loop track or queue too
+   - /loop track
+   - /loop queue
+   - /loop off
+- /clear - clear the queue
+- /jump index 
+- /lyrics - find lyrics for track?
+- pause/unpause - toggle
+- /remove 
+/ remove range start end
+- shuffle 
+- song - display info about song or current song
+- 24/7 mode (never leave)
+
+- fastforward (amount)
+- rewind (amount)
+seek (amount) 
+- search
+
+save personal queues
+- load, list, create, delete
+
+add user to allowed list 
+- more permissins per user?
+
+effects
+- change volume 
+- change speed 
+- bassboost
+-  change pitch?
+- reseteffects 
