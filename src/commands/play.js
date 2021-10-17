@@ -5,20 +5,6 @@ const queue = require('../queue.js');
 const embeds = require('../embeds.js');
 
 /**
- * Send an embed for a song ("Now playing")
- * @param {Message} message Message of the command
- * @param {object} song Song obj
- * @return {*}
- */
-function sendSongEmbed(message, song) {
-    const songEmbed = embeds.defaultEmbed()
-        .setTitle('Added to queue')
-        .setDescription(`[${song.title}](${song.url}) [${message.author.toString()}]`)
-        .setURL(song.url);
-    return message.channel.send(songEmbed);
-}
-
-/**
  * @description Play a song with the provided link
  * @param {Discord.Client} client the client thats runs the commands
  * @param {Discord.Message} message the command's message
@@ -40,10 +26,13 @@ module.exports.run = async (client, message, args) => {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
         url: FUrl,
-        requestedby: message.author.tag
+        requestedBy: message.author,
+        requestedChannel: message.channel
     };
 
     utils.log('Got music details, preparing the music to be played...');
+
+    let playingNow = false;
 
     if (!serverQueue || serverQueue.songs.length === 0) {
         if (voiceChannel === null) {
@@ -58,6 +47,7 @@ module.exports.run = async (client, message, args) => {
         let connection = await voiceChannel.join();
         serverQueue.connection = connection;
         serverQueue.play();
+        playingNow = true;
     } else {
         if (voiceChannel === null)
             return message.channel.send(embeds.notInVoiceChannelEmbed());
@@ -66,7 +56,8 @@ module.exports.run = async (client, message, args) => {
         utils.log(`Added music to the queue : ${song.title}`);
     }
 
-    return sendSongEmbed(message, song);
+    if (!playingNow)
+        return message.channel.send(embeds.songEmbed(song, 'Added to Queue'));
 };
 
 module.exports.names = ['play', 'p'];

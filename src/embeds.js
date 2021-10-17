@@ -27,5 +27,18 @@ module.exports = {
         embed = embed.addField('Aliases', cmd.names.join(', '), true);
 
         return embed;
+    },
+
+    /**
+     * An embed for a song ("Queued" / "Now playing")
+     * @param {object} song Song obj
+     * @param {string} title Title
+     * @return {*}
+     */
+    songEmbed: (song, title) => {
+        return defaultEmbed()
+            .setTitle(title)
+            .setDescription(`[${song.title}](${song.url}) [${song.requestedBy.toString()}]`)
+            .setURL(song.url);
     }
 };

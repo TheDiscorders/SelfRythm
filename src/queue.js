@@ -1,5 +1,7 @@
 const config = require('../config.js');
 const utils = require('./utils.js');
+const embeds = require('./embeds.js');
+
 const ytdl = require('ytdl-core');
 
 const LOOP_MODES = 'none,song,queue'.split(',');
@@ -37,6 +39,8 @@ class ServerQueue {
         const song = this.songs[0];
         if (!this.songs.length)
             return;
+
+        song.requestedChannel.send(embeds.songEmbed(song, 'Now Playing'));
 
         utils.log(`Started playing the music : ${song.title}`);
 

@@ -9,9 +9,7 @@ youtube 403 detection
 errors if no search result on youtube
 use opus stream 
 
-dont leave on queue end
-
-now playing when song starts playing
+warn about node version when starting up >= 16
 
 permissions aint workin
 
