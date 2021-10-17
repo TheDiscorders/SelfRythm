@@ -16,11 +16,12 @@ module.exports.run = async (client, message, args) => {
 
     utils.log('Stopped playing music');
     serverQueue.clear();
+    serverQueue.voiceChannel.leave();
 
     return message.channel.send(embeds.defaultEmbed().setDescription(':wave:'));
 };
 
-module.exports.names = ['stop', 'st', 'die', 'fuckoff', 'leave'];
+module.exports.names = ['leave', 'st', 'die', 'fuckoff', 'stop'];
 module.exports.help = {
     desc: 'Disconnect the bot',
     syntax: ''

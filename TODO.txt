@@ -5,8 +5,8 @@ whitelist servers
 remind command
 
 
-bugs:
-fuckoff should also leave voice channel (that was removed)
+
+
 permissions aint workin
 
 check if url is valid
@@ -14,7 +14,7 @@ youtube 403 detection
 errors if no search result on youtube
 use opus stream 
 
-warn about node version when starting up >= 16
+warn about node version when starting up >= 14
 
 
 better queue implementation:tm: 
@@ -36,7 +36,7 @@ locla file support / other sources
 
 don't hard code strings anymore
 
-!!np / no playing
+!!np / now playing
 
 !!help maybe
 
@@ -62,8 +62,8 @@ save personal queues
 add user to allowed list 
 - more permissins per user?
 
+
 effects
-- change volume 
 - change speed 
 - bassboost
 -  change pitch?

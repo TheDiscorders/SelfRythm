@@ -3,8 +3,8 @@ const config = require('../config.js');
 
 // Default embed
 const defaultEmbed = () => new MessageEmbed()
-    .setColor()
-    .setTimestamp();
+    .setColor();
+    // .setTimestamp();
 
 // Error embeds
 const errorEmbed = () => defaultEmbed().setColor(0xFF0000);
