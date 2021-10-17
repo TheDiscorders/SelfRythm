@@ -37,7 +37,7 @@ class ServerQueue {
      */
     play() {
         const song = this.songs[0];
-        if (!this.songs.length)
+        if (!this.songs.length || !song)
             return;
 
         song.requestedChannel.send(embeds.songEmbed(song, 'Now Playing'));
@@ -91,6 +91,26 @@ class ServerQueue {
     clear() {
         this.kill();
         this.songs = [];
+    }
+
+    /** Pause currently playing song */
+    pause() {
+        if (this.paused) return;
+        this.paused = true;
+        this.connection.dispatcher.pause();
+    }
+
+    /** Resume currently playing song */
+    resume() {
+        if (!this.paused) return;
+        this.paused = false;
+
+        // Hacky fix for a bug that was never fixed
+        // This resume-pause-resume must be followed if running
+        // node > v14.15.5
+        this.connection.dispatcher.resume();
+        this.connection.dispatcher.pause();
+        this.connection.dispatcher.resume();
     }
 }
 

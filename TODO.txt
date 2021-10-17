@@ -4,6 +4,11 @@ whitelist servers
 
 remind command
 
+
+bugs:
+fuckoff should also leave voice channel (that was removed)
+permissions aint workin
+
 check if url is valid
 youtube 403 detection
 errors if no search result on youtube
@@ -11,7 +16,6 @@ use opus stream
 
 warn about node version when starting up >= 16
 
-permissions aint workin
 
 better queue implementation:tm: 
 
@@ -38,13 +42,9 @@ don't hard code strings anymore
 
 database somewhere
 
-- reformat the js code
-- loop should loop track or queue too
-
 - /clear - clear the queue
 - /jump index 
 - /lyrics - find lyrics for track?
-- pause/unpause - toggle
 - /remove 
 / remove range start end
 - shuffle 

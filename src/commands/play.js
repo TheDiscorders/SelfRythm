@@ -47,6 +47,7 @@ module.exports.run = async (client, message, args) => {
         let connection = await voiceChannel.join();
         serverQueue.connection = connection;
         serverQueue.play();
+        serverQueue.resume();
         playingNow = true;
     } else {
         if (voiceChannel === null)
