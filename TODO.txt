@@ -5,6 +5,19 @@ whitelist servers
 remind command
 
 
+turn off music bot / turn on music bot
+
+collect stats on songs nad shit :D
+- total times played 
+- total songs
+- per user too
+
+quick fixes:
+add duration to queue / now playing
+add dB option for db volumes? (dispatcher.setVolumeDecibels)
+require percentage for percent, otherwise like 0.5?
+compute displayVolume like in aegiscommand-discord
+
 
 
 permissions aint workin
@@ -15,9 +28,6 @@ errors if no search result on youtube
 use opus stream 
 
 warn about node version when starting up >= 14
-
-
-better queue implementation:tm: 
 
 warn if no perms to view voice channel
 
@@ -34,15 +44,17 @@ automated tests (check for all params, help text, etc...)
 locla file support / other sources 
 - oundcloud, bandcamp, http urls
 
-don't hard code strings anymore
-
 !!np / now playing
+- song
+- who request 
+- how far in
 
 !!help maybe
 
 database somewhere
 
 - /clear - clear the queue
+    /clear all by user
 - /jump index 
 - /lyrics - find lyrics for track?
 - /remove 

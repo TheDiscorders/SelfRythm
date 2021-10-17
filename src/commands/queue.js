@@ -12,7 +12,7 @@ const queue = require('../queue.js');
  */
 module.exports.run = async (client, message, args) => {
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue || serverQueue.length === 0)
+    if (!serverQueue || serverQueue.size() === 0)
         return message.channel.send(embeds.songQueueEmpty());
 
     let queuetxt = '';

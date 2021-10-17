@@ -1,6 +1,7 @@
 const embeds = require('../embeds.js');
 const utils = require('../utils');
 const queue = require('../queue.js');
+const { REQUIRE_QUEUE_NON_EMPTY, REQUIRE_USER_IN_VC } = require('../commands.js');
 
 /**
  * @description Pause current song
@@ -10,14 +11,7 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-        return message.channel.send(embeds.notInVoiceChannelEmbed());
-
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue)
-        return message.channel.send(embeds.songQueueEmpty());
-
     serverQueue.pause();
 
     utils.log(`Paused music playback`);
@@ -29,3 +23,4 @@ module.exports.help = {
     desc: 'Pause playback',
     syntax: ''
 };
+module.exports.requirements = REQUIRE_QUEUE_NON_EMPTY | REQUIRE_USER_IN_VC;

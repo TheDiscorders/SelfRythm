@@ -2,6 +2,9 @@ const strings = require('../strings.json');
 const utils = require('../utils');
 const embeds = require('../embeds.js');
 const config = require('../../config.js');
+const commands = require('../commands.js');
+const queue = require('../queue.js');
+
 const prefix = config.prefix;
 
 const MAX_LEN = 1000; // TODO: remove
@@ -26,6 +29,16 @@ module.exports = async (client, message) => {
             message.channel.send(strings.permissionDenied);
             utils.log(`${message.author.tag} tried to run the command '${message.content.slice(0, MAX_LEN)}' but permission was not accepted`);
             return;
+        }
+
+        if (cmd.requirements) {
+            if (cmd.requirements & commands.REQUIRE_QUEUE_NON_EMPTY) {
+                const serverQueue = queue.queueManager.get(message.guild.id);
+                if (!serverQueue)
+                    return message.channel.send(embeds.songQueueEmpty());
+            }
+            if (cmd.requirements & commands.REQUIRE_USER_IN_VC && !message.member.voice.channel)
+                return message.channel.send(embeds.notInVoiceChannelEmbed());
         }
 
         try {

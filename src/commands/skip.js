@@ -1,6 +1,7 @@
 const utils = require('../utils');
 const embeds = require('../embeds.js');
 const queue = require('../queue.js');
+const { REQUIRE_QUEUE_NON_EMPTY, REQUIRE_USER_IN_VC } = require('../commands.js');
 
 /**
  * @description Skip the current song
@@ -10,20 +11,11 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-        return message.channel.send(embeds.notInVoiceChannelEmbed());
-
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue || serverQueue.songs.length === 0)
-        return message.channel.send(embeds.songQueueEmpty());
-
     utils.log(`Skipped music : ${serverQueue.songs[0].title}`);
-    serverQueue.kill();
+    serverQueue.skip();
 
-    return message.channel.send(embeds.defaultEmbed()
-        .setTitle('Skipping')
-        .setDescription(`${serverQueue.songs[0].title} [${message.author.toString()}]`));
+    return message.channel.send(embeds.songEmbed(serverQueue.currentSong(), 'Skipping'));
 };
 
 module.exports.names = ['skip', 's'];
@@ -31,3 +23,4 @@ module.exports.help = {
     desc: 'Skip the current song',
     syntax: ''
 };
+module.exports.requirements = REQUIRE_QUEUE_NON_EMPTY | REQUIRE_USER_IN_VC;

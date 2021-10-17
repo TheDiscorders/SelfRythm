@@ -1,6 +1,7 @@
 const embeds = require('../embeds.js');
 const utils = require('../utils');
 const queue = require('../queue.js');
+const { REQUIRE_USER_IN_VC } = require('../commands.js');
 
 /**
  * @description Loop the current song
@@ -10,14 +11,7 @@ const queue = require('../queue.js');
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-        return message.channel.send(embeds.notInVoiceChannelEmbed());
-
-    let serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue) // Create queue instance if doesn't exist
-        serverQueue = queue.queueManager.add(
-            new queue.ServerQueue(message, message.member.voice.channel));
+    const serverQueue = queue.queueManager.getOrCreate(message, message.member.voice.channel);
 
     let loopMode = queue.LOOP_MODES[(queue.LOOP_MODES.indexOf(serverQueue.loop) + 1) % queue.LOOP_MODES.length];
     if (args[0]) {
@@ -28,7 +22,7 @@ module.exports.run = async (client, message, args) => {
         loopMode = args[0].toLowerCase();
     }
 
-    serverQueue.loop = loopMode;
+    serverQueue.setLoopMode(loopMode);
     utils.log(`Loop mode set to ${loopMode}`);
     return message.channel.send(embeds.defaultEmbed().setDescription(`Loop mode now set to \`${loopMode}\``));
 };
@@ -38,3 +32,4 @@ module.exports.help = {
     desc: 'Change looping settings',
     syntax: '[loop | none | queue]'
 };
+module.exports.requirements = REQUIRE_USER_IN_VC;

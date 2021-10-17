@@ -1,5 +1,6 @@
 const utils = require('../utils');
 const embeds = require('../embeds.js');
+const { REQUIRE_USER_IN_VC } = require('../commands.js');
 
 /**
  * @description Make the bot join the current voice channel the user is in
@@ -10,17 +11,14 @@ const embeds = require('../embeds.js');
  */
 module.exports.run = async (client, message, args) => {
     const voiceChannel = message.member.voice.channel;
-    if (!voiceChannel)
-        return message.channel.send(embeds.notInVoiceChannelEmbed());
-
     utils.log(`Joined the channel : ${voiceChannel.name}`);
-
     return message.channel.send(embeds.defaultEmbed()
         .setDescription(`Joining ${voiceChannel.toString()}`));
 };
 
-module.exports.names = ['join', 'j', 'summon'];
+module.exports.names = ['summon', 'join', 'j'];
 module.exports.help = {
     desc: 'Summon the bot to the voice channel the user is in',
     syntax: ''
 };
+module.exports.requirements = REQUIRE_USER_IN_VC;

@@ -3,6 +3,7 @@ const ytdl = require('ytdl-core');
 const utils = require('../utils');
 const queue = require('../queue.js');
 const embeds = require('../embeds.js');
+const { REQUIRE_USER_IN_VC } = require('../commands.js');
 
 /**
  * @description Play a song with the provided link
@@ -19,7 +20,7 @@ module.exports.run = async (client, message, args) => {
 
     let FUrl = utils.isURL(args[0]) ? args[0] : await utils.getUrl(args);
     let voiceChannel = message.member.voice.channel;
-    let serverQueue = queue.queueManager.get(message.guild.id);
+    let serverQueue = queue.queueManager.getOrCreate(message, voiceChannel);
 
     const songInfo = await ytdl.getBasicInfo(FUrl);
     const song = {
@@ -34,14 +35,7 @@ module.exports.run = async (client, message, args) => {
 
     let playingNow = false;
 
-    if (!serverQueue || serverQueue.songs.length === 0) {
-        if (voiceChannel === null) {
-            queue.queueManager.delete(message.guild.id);
-            return message.channel.send(embeds.notInVoiceChannelEmbed());
-        }
-
-        serverQueue = new queue.ServerQueue(message, voiceChannel);
-        serverQueue = queue.queueManager.add(serverQueue);
+    if (!serverQueue.isPlaying()) {
         serverQueue.songs.push(song);
 
         let connection = await voiceChannel.join();
@@ -50,9 +44,6 @@ module.exports.run = async (client, message, args) => {
         serverQueue.resume();
         playingNow = true;
     } else {
-        if (voiceChannel === null)
-            return message.channel.send(embeds.notInVoiceChannelEmbed());
-
         serverQueue.songs.push(song);
         utils.log(`Added music to the queue : ${song.title}`);
     }
@@ -66,3 +57,4 @@ module.exports.help = {
     desc: 'Add a song to the queue',
     syntax: '<youtube url | playlist | search query>'
 };
+module.exports.requirements = REQUIRE_USER_IN_VC;

@@ -11,8 +11,8 @@ const queue = require('../queue.js');
  */
 module.exports.run = async (client, message, args) => {
     const serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue || serverQueue.songs.length === 0)
-        return message.channel.send(embeds.songQueueEmpty());
+    if (!serverQueue) // Not in VC, ignore
+        return;
 
     utils.log('Stopped playing music');
     serverQueue.clear();

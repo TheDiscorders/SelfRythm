@@ -18,7 +18,7 @@ class ServerQueue {
      * @param {VoiceChannel} voiceChannel Voice channel to play in
      */
     constructor(message, voiceChannel) {
-        this.server = message.guild.id;
+        this.serverID = message.guild.id;
         this.textchannel = message.channel;
         this.voiceChannel = voiceChannel;
 
@@ -29,6 +29,34 @@ class ServerQueue {
         this.paused = false;
         this.loop = 'none'; // in LOOP_MODES
         this.skipped = false;
+
+        this.shuffle = false; // TODO: deterministic algorithm based on seed per queue + length or something on how to shuffle
+        this.index = 0;
+        this._isPlaying = false;
+    }
+
+    isEmpty() {
+        return !this.songs.length;
+    }
+
+    size() {
+        return this.songs.length;
+    }
+
+    index() {
+        return this.index;
+    }
+
+    setLoopMode(loop) {
+        this.loop = loop;
+    }
+
+    currentSong() {
+        return this.songs[this.index];
+    }
+
+    isPlaying() {
+        return this._isPlaying;
     }
 
     /**
@@ -36,13 +64,24 @@ class ServerQueue {
      * @return {*} The dispatcher
      */
     play() {
-        const song = this.songs[0];
-        if (!this.songs.length || !song)
+        if (this.isEmpty() || this.index < 0 || this.index >= this.size()) {
+            this._isPlaying = false;
+            this.textchannel.send(embeds.defaultEmbed()
+                .setDescription('Finished playing!'));
             return;
+        }
+        if (this.loop === 'queue')
+            this.index %= this.size();
 
-        song.requestedChannel.send(embeds.songEmbed(song, 'Now Playing'));
+        this._isPlaying = true;
 
-        utils.log(`Started playing the music : ${song.title}`);
+        const song = this.songs[this.index];
+        this.textchannel = song.textchannel; // Update text channel
+
+        if (this.loop !== 'song')
+            song.requestedChannel.send(embeds.songEmbed(song, 'Now Playing'));
+
+        utils.log(`Started playing the music : ${song.title} ${this.index}`);
 
         const dispatcher = this.connection.play(ytdl(song.url, {
             filter: 'audioonly',
@@ -51,19 +90,14 @@ class ServerQueue {
         }));
 
         dispatcher.on('finish', () => {
-            if (this.songs[0])
-                utils.log(`Finished playing the music : ${this.songs[0].title}`);
+            if (this.songs[this.index])
+                utils.log(`Finished playing the music : ${this.songs[this.index].title}`);
             else
                 utils.log(`Finished playing all musics, no more musics in the queue`);
 
-            if (this.loop !== 'song' || this.skipped === true) {
-                // Not very efficent but t'was easy to implement
-                let tmp = this.songs.shift();
-                if (this.loop !== 'none')
-                    this.songs.push(tmp);
-            }
-            if (this.skipped === true)
-                this.skipped = false;
+            if (this.loop !== 'song' || this.skipped === true)
+                this.index++;
+            this.skipped = false;
             this.play();
         });
 
@@ -77,8 +111,9 @@ class ServerQueue {
 
     /**
      * Stop the current song from playing
+     * and advance the queue
      */
-    kill() {
+    skip() {
         this.skipped = true;
         if (this.connection.dispatcher)
             this.connection.dispatcher.end();
@@ -89,7 +124,7 @@ class ServerQueue {
      * clear the queue
      */
     clear() {
-        this.kill();
+        this.skip();
         this.songs = [];
     }
 
@@ -124,6 +159,21 @@ class QueueManager {
     }
 
     /**
+     * Get server queue instance for server. If one does not
+     * exist it will be created.
+     *
+     * @param {Message} message message for command
+     * @param {VoiceChannel} voiceChannel voice channel
+     * @return {ServerQueue} Server queue instance for server
+     */
+    getOrCreate(message, voiceChannel) {
+        const serverID = message.guild.id;
+        if (this._queues[serverID])
+            return this._queues[serverID];
+        return this.add(new ServerQueue(message, voiceChannel));
+    }
+
+    /**
      * Add a new server to the list of queues. If only one voice
      * channel is enabled in config adding a new queue of a different
      * server will clear all other queues. If there is already a queue
@@ -136,13 +186,13 @@ class QueueManager {
      * @return {ServerQueue} Queue instance
      */
     add(queue) {
-        if (this._queues[queue.server])
-            return this._queues[queue.server];
+        if (this._queues[queue.serverID])
+            return this._queues[queue.serverID];
         if (config.onlyOneVoiceChannel) {
             Object.values(this._queues).filter(x => x).forEach(q => q.clear());
             this._queues = {};
         }
-        this._queues[queue.server] = queue;
+        this._queues[queue.serverID] = queue;
         return queue;
     }
 

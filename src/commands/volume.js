@@ -1,6 +1,7 @@
 const embeds = require('../embeds.js');
 const queue = require('../queue.js');
 const utils = require('../utils.js');
+const { REQUIRE_USER_IN_VC } = require('../commands.js');
 
 const MAX_VOLUME = utils.MAX_VOLUME;
 
@@ -12,13 +13,7 @@ const MAX_VOLUME = utils.MAX_VOLUME;
  * @return {Promise<Message>} sent message
  */
 module.exports.run = async (client, message, args) => {
-    if (!message.member.voice.channel)
-        return message.channel.send(embeds.notInVoiceChannelEmbed());
-
-    let serverQueue = queue.queueManager.get(message.guild.id);
-    if (!serverQueue) // Create queue instance if doesn't exist
-        serverQueue = queue.queueManager.add(
-            new queue.ServerQueue(message, message.member.voice.channel));
+    const serverQueue = queue.queueManager.getOrCreate(message, message.member.voice.channel);
 
     if (args.length > 1)
         throw new utils.FlagHelpError();
@@ -44,3 +39,4 @@ module.exports.help = {
     desc: 'Set the volume of the music',
     syntax: '<volume 0-200>'
 };
+module.exports.requirements = REQUIRE_USER_IN_VC;
