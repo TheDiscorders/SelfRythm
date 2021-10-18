@@ -1,10 +1,48 @@
 const AsciiTable = require('ascii-table/ascii-table');
 const YouTube = require('youtube-sr').default;
 
+let config = require('../config');
+
 class FlagHelpError extends Error {
     constructor(message) {
         super(message);
         this.name = 'FlagHelpError';
+    }
+}
+
+class Inactivity {
+    constructor() {
+        this.config = Object.assign({
+            waitRejoinSeconds: 60,
+            botIdleSeconds: 600
+        }, config.Inactivity) // Writes default values with ones from written configuration file
+
+        // Convert to milliseconds for timers
+        this.config.waitRejoinSeconds *= 1000;
+        this.config.botIdleSeconds *= 1000;
+
+        this.aloneTimer = setTimeout(() => {}, 0);
+        this.inactivityTimer = setTimeout(() => {}, 0);
+    }
+
+    onAlone(serverQueue) {
+        clearTimeout(this.aloneTimer);
+        if (config.waitRejoinSeconds < 0) return;
+        setTimeout(() => { serverQueue.voiceChannel.leave(); }, this.config.waitRejoinSeconds);
+    }
+
+    onPersonJoin() {
+        clearTimeout(this.aloneTimer);
+    }
+
+    onNotPlaying(serverQueue) {
+        clearTimeout(this.inactivityTimer);
+        if (config.botIdleSeconds < 0) return;
+        setTimeout(() => { serverQueue.voiceChannel.leave() }, this.config.botIdleSeconds);
+    }
+
+    onPlaying() {
+        clearTimeout(this.inactivityTimer);
     }
 }
 
@@ -80,6 +118,8 @@ module.exports = {
     },
 
     FlagHelpError,
+
+    inactivity: new Inactivity(),
 
     VOLUME_BASE_UNIT: 100, // what is = 100% volume, note volume command assumes this is 100 (it uses a % sign)
     MAX_VOLUME: 200

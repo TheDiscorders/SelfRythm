@@ -33,6 +33,8 @@ class ServerQueue {
         this.shuffle = false; // TODO: deterministic algorithm based on seed per queue + length or something on how to shuffle
         this.index = 0;
         this._isPlaying = false;
+
+        utils.inactivity.onNotPlaying();
     }
 
     isEmpty() {
@@ -68,12 +70,14 @@ class ServerQueue {
             this._isPlaying = false;
             this.textchannel.send(embeds.defaultEmbed()
                 .setDescription('Finished playing!'));
+            utils.inactivity.onNotPlaying();
             return;
         }
         if (this.loop === 'queue')
             this.index %= this.size();
 
         this._isPlaying = true;
+        utils.inactivity.onPlaying();
 
         const song = this.songs[this.index];
         this.textchannel = song.textchannel; // Update text channel
@@ -133,6 +137,7 @@ class ServerQueue {
         if (this.paused) return;
         this.paused = true;
         this.connection.dispatcher.pause();
+        this.inactivity.stoppedPlaying();
     }
 
     /** Resume currently playing song */
