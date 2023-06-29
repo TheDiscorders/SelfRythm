@@ -5,7 +5,7 @@
 ## ⚠ Warning
 
 We created that for fun, we don't encourage you to use selfbots to create trouble on public servers and we won't do so.
-## What is this shit ?
+## What is this ?
 
 This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's made to do the same actions as **[Rythm](https://rythmbot.co/)**  while being a selfbot, this mean it can be used with a user account. This has many advantages, for example you can use it on any servers you're in, even without permissions.
 
