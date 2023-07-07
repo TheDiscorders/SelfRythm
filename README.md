@@ -12,8 +12,8 @@ This project is a **Self Rythm Bot** in **[Node JS](https://nodejs.org/)**. It's
 ## ⛓ Docker installation
 
 You can use SelfRythm as a Docker container. To do so, you need to install Docker on your machine.
-Create a Discord account and get the token
-Then, you can run the command  
+Create a Discord account and get the token.
+Then, you can run the command:
 ```sh
 docker run -d \
 --name "SelfRythm" \ # Optionnal, you can change it
