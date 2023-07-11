@@ -3,7 +3,7 @@ WORKDIR /code
 COPY package*.json ./
 RUN apk add  --no-cache ffmpeg
 RUN apk add --no-cache --virtual .gyp \
-        python \
+        python3 \
         make \
         g++ \
     && npm i \
