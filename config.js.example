@@ -1,6 +1,0 @@
-module.exports = {
-    token: "your token",
-    prefix: "your prefix"
-};
-
-/* remove .example from the name of this file */

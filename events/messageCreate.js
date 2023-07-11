@@ -8,7 +8,7 @@ module.exports = (client, message) => {
         const command = args.shift().toLowerCase();
         const cmd = client.commands.get(command);
         if (!cmd) return;
-        if (!global.config.allowed.includes(message.author.id) && global.config.allowed.length > 0) {message.channel.send(strings.permissionDenied); utils.log(`${message.author.tag} tried to run the command '${message.content}' but permission was not accepted`); return; }
+        if (!global.config.allowed.includes(message.author.id) && global.config.allowed.length > 0) {message.channel.send(strings.permissionDenied); utils.log(`${message.author.username} tried to run the command '${message.content}' but permission was not accepted`); return; }
         cmd.run(client, message, args);
         return
     }

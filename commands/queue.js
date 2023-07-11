@@ -11,11 +11,11 @@ module.exports.run = async (client, message, args) => {
 
     const serverQueue = queue.get("queue");
 
-    if(!serverQueue){return message.channel.send(strings.noSongsQueued);};
+    if(!serverQueue || !serverQueue.songs){return message.channel.send(strings.noSongsQueued);};
 
     queuetxt = "";
     
-    for(let i=0;i<serverQueue.songs.length;i++){
+    for(let i=1;i<serverQueue.songs.length;i++){
         var minutes = `${Math.floor(serverQueue.songs[i].duration / 60)}`;
         if(minutes.length === 1) minutes = "0" + minutes;
         var seconds = `${serverQueue.songs[i].duration % 60}`;

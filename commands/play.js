@@ -32,12 +32,12 @@ module.exports.run = async (client, message, args) => {
         title: songInfo.videoDetails.title,
         duration: songInfo.videoDetails.lengthSeconds,
         url: FUrl,
-        requestedby: message.author.tag
+        requestedby: message.author.username
     };
 
     utils.log("Got music details, preparing the music to be played...")
-
-    if(!serverQueue) {
+    
+    if(!serverQueue || !serverQueue.songs) {
 
         const queueConstruct = {
             textchannel: message.channel,
@@ -56,8 +56,9 @@ module.exports.run = async (client, message, args) => {
         if (voiceChannel != null) { 
 
             message.channel.send(strings.startedPlaying.replace("SONG_TITLE", song.title).replace("url", song.url));
+            
+            const connection = utils.joinVChannel(voiceChannel);
 
-            var connection = await voiceChannel.join();
             queueConstruct.connection = connection;
 
             utils.play(queueConstruct.songs[0]);

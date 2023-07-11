@@ -30,12 +30,12 @@ module.exports.run = async (client, message, args) => {
             collector.on('collect', () => {
                 oldVolume = serverQueue.volume;
                 serverQueue.volume = 100;
-                serverQueue.connection.dispatcher.setVolumeLogarithmic(100 / 5);
+                serverQueue.connection._state.subscription.player._state.resource.volume.setVolumeLogarithmic(100 / 5);
                 message.channel.send(strings.startEarrape);
                 setTimeout(function(){
                     message.channel.send(strings.endEarrape.replace("VOLUME", oldVolume));
                     serverQueue.volume = oldVolume;
-                    return serverQueue.connection.dispatcher.setVolumeLogarithmic(oldVolume / 5);
+                    return serverQueue.connection._state.subscription.player._state.resource.volume.setVolumeLogarithmic(oldVolume / 5);
                 }, 7000);
             });
 
@@ -51,7 +51,8 @@ module.exports.run = async (client, message, args) => {
         message.channel.send(strings.volumeChanged.replace("VOLUME", args[0]));
     
         serverQueue.volume = floatVolume;
-        return serverQueue.connection.dispatcher.setVolumeLogarithmic(floatVolume / 5);
+        serverQueue.connection._state.subscription.player._state.resource.volume.setVolumeLogarithmic(100 / 5);
+        return serverQueue.connection._state.subscription.player._state.resource.volume.setVolumeLogarithmic(floatVolume / 5);
 
     };
 };

@@ -18,7 +18,9 @@ module.exports.run = async (client, message, args) => {
     utils.log(`Joined the channel : ${voiceChannel.name}`);
 
 
-    if(serverQueue.voiceChannel.guild.id != voiceChannel.guild.id){utils.play(serverQueue.songs[0])
+    if(serverQueue.voiceChannel.guild.id != voiceChannel.guild.id){
+        
+        utils.play(serverQueue.songs[0])
 
         songs = [];
 
@@ -26,7 +28,7 @@ module.exports.run = async (client, message, args) => {
             songs.push(serverQueue.songs[0]);
         };
 
-        await serverQueue.connection.dispatcher.end();
+        await serverQueue.connection._state.subscription.player.stop();
 
         const queueConstruct = {
             textchannel: message.channel,
@@ -41,12 +43,12 @@ module.exports.run = async (client, message, args) => {
 
         queue.set("queue", queueConstruct);
 
-        queueConstruct.connection = await voiceChannel.join();
+        queueConstruct.connection = utils.joinVChannel(voiceChannel);
 
         utils.play(queueConstruct.songs[0]);
 
     } else {
-        serverQueue.connection = await voiceChannel.join();
+        serverQueue.connection = utils.joinVChannel(voiceChannel);
     }
 
 

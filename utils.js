@@ -1,6 +1,7 @@
 const AsciiTable = require("ascii-table/ascii-table");
 const YouTube = require("youtube-sr").default;
 const ytdl = require("ytdl-core");
+const { createAudioResource, createAudioPlayer, joinVoiceChannel } = require('@discordjs/voice');
 
 module.exports = {
 
@@ -73,31 +74,45 @@ module.exports = {
         const serverQueue = queue.get("queue");
 
         if(!song){
-            utils.log("No songs left in queue")
-            serverQueue.voiceChannel.leave();
+            utils.log("No songs left in queue");
+            serverQueue.connection.destroy();
             return queue.delete("queue");
         }
 
         utils.log(`Started playing the music : ${song.title}`)
 
-        const dispatcher = serverQueue.connection.play(ytdl(song.url, {
+        let resource = createAudioResource(ytdl(song.url, {
             filter: 'audioonly',
             quality: 'highestaudio',
             highWaterMark: 1 << 25
-        }));
+        }), {inlineVolume: true});
+    
+        const player = createAudioPlayer();
+        serverQueue.connection.subscribe(player);
+    
+        player.play(resource);
 
-        dispatcher.on('finish', () => {
-            if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`);
-            else utils.log(`Finished playing all musics, no more musics in the queue`);
-            if(serverQueue.loop === false || serverQueue.skipped === true) serverQueue.songs.shift();
-            if(serverQueue.skipped === true) serverQueue.skipped = false;
-            utils.play(serverQueue.songs[0]);
+        player.addListener("stateChange", (oldOne, newOne) => {
+            if (newOne.status == "idle") {
+                if(serverQueue.songs[0]) utils.log(`Finished playing the music : ${serverQueue.songs[0].title}`);
+                else utils.log(`Finished playing all musics, no more musics in the queue`);
+                if(serverQueue.loop === false || serverQueue.skipped === true) serverQueue.songs.shift();
+                if(serverQueue.skipped === true) serverQueue.skipped = false;
+                utils.play(serverQueue.songs[0]);
+            }
         });
 
-        dispatcher.on('error', error => {
+        player.on('error', error => {
             console.log(error)
         });
 
-        dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
+        serverQueue.connection._state.subscription.player._state.resource.volume.setVolumeLogarithmic(serverQueue.volume / 5);
+    },
+    joinVChannel: function(voiceChannel) {
+        return joinVoiceChannel({
+            channelId: voiceChannel.id,
+            guildId: voiceChannel.guild.id,
+            adapterCreator: voiceChannel.guild.voiceAdapterCreator,
+        });
     }
 }

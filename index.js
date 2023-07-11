@@ -1,8 +1,15 @@
-const Discord = require("discord.js-selfbot");
-const client = new Discord.Client();
+const Discord = require("discord.js-selfbot-v13");
+const client = new Discord.Client({
+  intents: [
+    Discord.Intents.FLAGS.GUILDS,
+    Discord.Intents.FLAGS.GUILD_VOICE_STATES
+  ],  
+  checkUpdate: false,
+});
 const fs = require('fs');
 const Enmap = require('enmap');
 const utils = require('./utils');
+const { Player } = require("discord-player")
 
 if (!process.env.TOKEN){
   try{
@@ -32,6 +39,13 @@ utils.log("Logging in...");
 
 global.queue = new Map();
 client.commands = new Enmap();
+
+client.player = new Player(client, {
+  ytdlOptions: {
+      quality: "highestaudio",
+      highWaterMark: 1 << 25
+  }
+})
 
 /* ----------------------------------------------- */
 

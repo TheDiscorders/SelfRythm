@@ -17,7 +17,7 @@ module.exports.run = async (client, message, args) => {
 
     utils.log("Stopped playing music");
 
-    serverQueue.connection.dispatcher.end();
+    serverQueue.connection._state.subscription.player.stop();
 
     return message.channel.send(strings.musicStopped);
 
