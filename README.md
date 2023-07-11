@@ -56,6 +56,8 @@ Start the bot by doing **`npm start`** in a terminal in the folder.
 ▶️ _loop the current music, re enter the command to stop._
   * **`$queue`**
 ▶️ _show the musics in the queue._
+  * **`$clear`**
+▶️ _clears the current queue._
   
 ## 💡 Features
 
