@@ -58,6 +58,8 @@ Start the bot by doing **`npm start`** in a terminal in the folder.
 ▶️ _show the musics in the queue._
   * **`$clear`**
 ▶️ _clears the current queue._
+  * **`$volume <number>`**
+▶️ _modifies the volume of the bot._
   
 ## 💡 Features
 
