@@ -19,7 +19,7 @@
   "dependencies": {
     "ascii-table": "^0.0.9",
     "discord-player": "^6.6.1",
-    "discord.js-selfbot-v13": "^2.14.6",
+    "discord.js-selfbot-v13": "^2.14.12",
     "enmap": "^5.9.8",
     "ytdl-core": "^4.11.4"
   }
